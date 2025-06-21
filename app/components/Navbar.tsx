@@ -7,7 +7,7 @@ import LogoutButton from './LogoutButton';
 const Navbar = async () => {
   const navLinks = [
     {name: "Home", redirectTo: "/"},
-    {name: "Dashboard", redirectTo: "/dashboard"},
+    {name: "Dashboard", redirectTo: "/dashboard/invoice"},
     {name: "Features", redirectTo: "/"},
     {name: "Contact", redirectTo: "/"},
   ];

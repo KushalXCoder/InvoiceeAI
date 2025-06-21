@@ -5,11 +5,11 @@ import { FaArrowRight } from 'react-icons/fa6'
 
 const SignInPage = () => {
   return (
-    <div className="sign-in-page h-screen w-screen flex justify-center items-center bg-blue-950">
-        <div className="sign-in-box h-2/3 w-1/4 rounded-lg shadow-2xl backdrop-blur-2xl flex flex-col items-center py-5 gap-5 bg-white mt-10">
+    <div className="sign-in-page h-screen w-screen flex justify-center items-center bg-blue-950 relative">
+        <div className="sign-in-box h-2/3 md:w-2/4 lg:w-1/4 rounded-lg shadow-2xl backdrop-blur-2xl flex flex-col items-center px-5 py-5 gap-5 bg-white mt-10 absolute">
             <div className="heading flex flex-col items-center">
                 <h1 className='font-facultyGlyphic text-lg'>Sign Up to InvoiceeAI</h1>
-                <p className='text-gray-500 font-poppins text-sm'>Looks like its your first time, fill details to continue</p>
+                <p className='text-gray-500 font-poppins text-sm text-center'>Looks like its your first time, fill details to continue</p>
             </div>
             <GoogleButton/>
             <div className="or flex justify-center items-center w-full gap-4">

@@ -18,7 +18,7 @@ const Hero = () => {
         <h1 className='text-center'>Using Invoicee AI !</h1>
       </div>
       <p className='text-gray-500 my-5'>Generate Invoice in seconds, either manually or using our AI maker</p>
-      <Link href="/" className='flex items-center gap-3 bg-blue-500 px-5 py-1 rounded-lg text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] relative'>
+      <Link href="/dashboard/invoice" className='flex items-center gap-3 bg-blue-500 px-5 py-1 rounded-lg text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] relative'>
         Get Started
         <FaArrowRightLong color='white' className='h-10'/>
         <div className="free-image absolute top-10 left-[90%] w-full flex items-center gap-0">
