@@ -18,6 +18,7 @@ type ItemsStore = {
     addItem: () => void,
     removeItem: (index: number) => void,
     findTotal: (field: keyof Omit<ItemsData,"itemsDescription">) => number,
+    isItemsChanged: boolean,
     resetItems: () => void;
 }
 
@@ -48,18 +49,18 @@ export const useItemsStore = create<ItemsStore>() (
                     console.log((rate) * tax/100);
                     updatedItem.amount = (qty * rate) + ((qty * rate * tax)/100);
                 }
-
                 updatedItems[index] = updatedItem;
-                return { itemsData: updatedItems }
+                return { itemsData: updatedItems, isItemsChanged: true }
             }),
         addItem: () => 
             set((state) => ({
-                itemsData: [...state.itemsData, { ...initialItemsData }]
+                itemsData: [...state.itemsData, { ...initialItemsData }],
+                isItemsChanged: true,
             })),
         removeItem: (index) =>
             set((state) => {
                 const newArray = state.itemsData.filter((_,i) => i != index);
-                return { itemsData: newArray };
+                return { itemsData: newArray, isItemsChanged: true };
             }),
         findTotal: (field) => {
             return get().itemsData.reduce((sum: number, item: ItemsData) => {
@@ -77,9 +78,11 @@ export const useItemsStore = create<ItemsStore>() (
                 return sum + val;
             },0)
         },
+        isItemsChanged: false,
         resetItems: () =>
             set(() => ({
                 itemsData: [initialItemsData],
+                isItemsChanged: false,
             }))
     }),
     {

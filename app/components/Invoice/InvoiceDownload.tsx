@@ -7,23 +7,32 @@ import { generatePdf } from '@/lib/helper/generatePdf';
 import { useItemsStore } from '@/store/itemsStore';
 
 const InvoiceDownload = () => {
-  const { data, generateInvoiceId } = useInvoiceStore();
-  const { itemsData } = useItemsStore();
+  const { data, setField, isInvoiceChanged } = useInvoiceStore();
+  const { itemsData, findTotal, isItemsChanged } = useItemsStore();
 
   const handleDownload = async () => {
-    if(!data.invoiceId) generateInvoiceId();
-
-    // Doing this to get the updated data, with the invoice id
+    // Doing this to get the updated data
     const finalData = useInvoiceStore.getState().data;
+
+    // Generating pdf using required things
     generatePdf(finalData, itemsData);
 
+    // Finding total amount, as to store it in database
+    const totalAmount = findTotal("amount");
+
+    // Fetch request to generate invoice
     const res = await fetch(`${process.env.NEXT_PUBLIC_URI}/api/generate-invoice`, {
       method: "POST",
-      body: JSON.stringify({data: finalData, itemsData}),
+      body: JSON.stringify({data: finalData, itemsData, totalAmount, isInvoiceChanged, isItemsChanged}),
     })
 
     if(res.status != 200) {
       console.log("Error", res);
+    }
+
+    const ans = await res.json();
+    if(data.invoiceId === "") {
+      setField("invoiceId",ans.invoice.invoiceId);
     }
   };
 

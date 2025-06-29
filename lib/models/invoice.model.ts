@@ -4,6 +4,15 @@ const InvoiceSchema = new mongoose.Schema({
     invoiceId: {
         type: String,
     },
+    invoiceNumber: {
+        type: String,
+    },
+    orderDate: {
+        type: String,
+    },
+    dueDate: {
+        type: String,
+    },
     user: {
         type: String,
     },
@@ -19,7 +28,7 @@ const InvoiceSchema = new mongoose.Schema({
     address3: {
         type: String,
     },
-    billToCompany: {
+    billToName: {
         type: String,
     },
     billToAddress1: {
@@ -37,9 +46,19 @@ const InvoiceSchema = new mongoose.Schema({
     tnc: {
         type: String,
     },
+    finalAmount: {
+        type: Number,
+    },
     itemsData: {
         type: [Schema.Types.Mixed],
         default: [],
+    },
+    status: {
+        type: String,
+        default: "Pending",
+    },
+    url: {
+        type: String,
     }
 });
 

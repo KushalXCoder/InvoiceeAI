@@ -2,16 +2,17 @@ import Invoice from "@/lib/models/invoice.model";
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
 import connectDb from "@/lib/helper/connectDb";
+import { getNanoId } from "@/lib/helper/nanoId";
 
 // Comparing itemsData stored in db, and itesData getting from the request
-function areItemsEqual(a: unknown[], b: unknown[]) {
-  if (!Array.isArray(a) || !Array.isArray(b)) return false;
-  if (a.length !== b.length) return false;
+// function areItemsEqual(a: unknown[], b: unknown[]) {
+//   if (!Array.isArray(a) || !Array.isArray(b)) return false;
+//   if (a.length !== b.length) return false;
 
-  return a.every((item, index) => {
-    return JSON.stringify(item) === JSON.stringify(b[index]);
-  });
-}
+//   return a.every((item, index) => {
+//     return JSON.stringify(item) === JSON.stringify(b[index]);
+//   });
+// }
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -20,57 +21,75 @@ export const POST = async (req: NextRequest) => {
 
     // Get session and data
     const session = await auth();
-    const { data, itemsData } = await req.json();
+    const { data, itemsData, totalAmount, isInvoiceChanged, isItemsChanged } = await req.json();
 
     // Store the data in updates object
-    const updates: { [key: string]: unknown } = {
-      companyName: data.companyName,
-      address1: data.address1,
-      address2: data.address2,
-      address3: data.address3,
-      billToCompany: data.billToCompany,
-      billToAddress1: data.billToAddress1,
-      billToAddress2: data.billToAddress2,
-      billToAddress3: data.billToAddress3,
-      notes: data.notes,
-      tnc: data.tnc,
-    };
+    // const updates: { [key: string]: unknown } = {
+    //   invoiceNumber: data.invoiceNumber,
+    //   orderDate: data.orderDate,
+    //   dueDate: data.dueDate,
+    //   companyName: data.companyName,
+    //   address1: data.address1,
+    //   address2: data.address2,
+    //   address3: data.address3,
+    //   billToName: data.billToName,
+    //   billToAddress1: data.billToAddress1,
+    //   billToAddress2: data.billToAddress2,
+    //   billToAddress3: data.billToAddress3,
+    //   notes: data.notes,
+    //   tnc: data.tnc,
+    //   finalAmount: totalAmount,
+    // };
 
-    const invoice = await Invoice.findOne({ invoiceId: data.invoiceId });
-
-    // Create new invoice if not exists
-    if (!invoice) {
-      const newInvoice = await Invoice.create({
-        invoiceId: data.invoiceId,
+    if(data.invoiceId === "") {
+      const id = await getNanoId();
+      const invoice = await Invoice.create({
+        invoiceId: id,
         user: session?.user?.email,
-        ...updates,
+        ...data,
         itemsData,
+        finalAmount: totalAmount,
       });
 
-      return NextResponse.json({ message: "Invoice added", newInvoice }, { status: 200 });
+      return NextResponse.json({ message: "Invoice added", invoice }, { status: 200 });
     }
+
+    if(isInvoiceChanged || isItemsChanged) {
+      const invoice = await Invoice.findOne({ invoiceId: data.invoiceId });
+      if(isInvoiceChanged) {
+        Object.assign(invoice,data);
+      }
+      else {
+        console.log(invoice.itemsData);
+        console.log(itemsData);
+        invoice.itemsData = itemsData;
+        invoice.finalAmount = totalAmount;
+      }
+      await invoice.save();
+      return NextResponse.json({ message: "Invoice Saved", invoice }, { status: 200 });
+    }
+
+    // const invoice = await Invoice.findOne({ invoiceId: data.invoiceId });
 
     // Check if any fields or items have changed
-    let isDiff = false;
-    for (const key in updates) {
-      if (invoice[key] !== updates[key]) {
-        isDiff = true;
-        break;
-      }
-    }
-    const itemsChanged = !areItemsEqual(invoice.itemsData || [], itemsData || []);
+    // let isDiff = false;
+    // for (const key in updates) {
+    //   if (invoice[key] !== updates[key]) {
+    //     isDiff = true;
+    //     break;
+    //   }
+    // }
+    // const itemsChanged = !areItemsEqual(invoice.itemsData || [], itemsData || []);
 
     // If no changes return
-    if (!isDiff && !itemsChanged) {
+    else {
       return NextResponse.json({ message: "No changes detected" }, { status: 200 });
     }
 
     // Make changes in db
-    Object.assign(invoice, updates);
-    if (itemsChanged) invoice.itemsData = itemsData;
-    await invoice.save();
-
-    return NextResponse.json({ message: "Invoice Saved", invoice }, { status: 200 });
+    // Object.assign(invoice, updates);
+    // if (itemsChanged) invoice.itemsData = itemsData;
+    // await invoice.save();
 
   } catch (error) {
     console.error("Error saving invoice", error);

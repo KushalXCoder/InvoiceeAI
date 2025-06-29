@@ -6,6 +6,9 @@ import { useInvoiceStore } from '@/store/invoiceStore';
 import { FaRegLightbulb } from "react-icons/fa6";
 
 type InvoiceData = {
+  invoiceNumber: string,
+  orderDate: string,
+  dueDate: string | null,
   companyName: string,
   logo: File | null,
   address1: string,
@@ -37,8 +40,43 @@ const InvoiceInput = () => {
     <div className="invoice-details w-2/6 bg-white mt-2 rounded-lg px-5 py-3 overflow-y-auto font-poppins">
       <h1 className='font-poppins text-3xl'>Invoice Details</h1>
       <form className="invoice-details w-full flex flex-col mt-5">
+        {/* Primary Details */}
+        <div className="primary-details flex flex-col">
+          <h1 className='border border-gray-400 w-fit px-5 py-1 rounded-lg'>Primary Details</h1>
+          <div className="invoice-number flex flex-col mt-5 gap-1">
+            <label htmlFor="invoice-number">Invoice No</label>
+            <input
+              type="text"
+              name='invoiceNumber'
+              value={data.invoiceNumber}
+              placeholder='123456'
+              className='border p-2 w-full'
+              onChange={handleChange}
+            />
+          </div>
+          <div className="order-date flex flex-col mt-5 gap-1">
+            <h1>Order Date</h1>
+            <input
+              type="date"
+              name="orderDate"
+              value={data.orderDate}
+              className='border p-2 w-full'
+              onChange={handleChange}
+            />
+          </div>
+          <div className="due-date flex flex-col mt-5 gap-1">
+            <h1>Due Date</h1>
+            <input
+              type="date"
+              name="dueDate"
+              value={data.dueDate ?? ""}
+              className='border p-2 w-full'
+              onChange={handleChange}
+            />
+          </div>
+        </div>
         {/* Company Details */}
-        <div className="company-details flex flex-col">
+        <div className="company-details flex flex-col mt-5">
           <h1 className='border border-gray-400 w-fit px-5 py-1 rounded-lg'>Company Details</h1>
           <div className="logo flex flex-col mt-5 gap-1">
             <h1 className='text-[15px]'>Logo</h1>

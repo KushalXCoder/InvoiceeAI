@@ -6,25 +6,67 @@ import { SiGoogledocs } from "react-icons/si";
 import { SiTicktick } from "react-icons/si";
 import { GiCancel } from "react-icons/gi";
 import { FaExclamationCircle } from "react-icons/fa";
-import { GrView } from "react-icons/gr";
-import { MdEdit } from "react-icons/md";
-import { FaDownload } from "react-icons/fa6";
+import dayjs from 'dayjs';
+import DashboardActions from '@/app/components/Dashboard/DashboardActions';
+import { countInvoices } from '@/lib/helper/countInvoices';
 
-const page = async () => {
+type ItemsData = {
+    itemsDescription: string,
+    qty: number | null,
+    rate: number | null,
+    igst: number | null,
+    cgst: number | null,
+    sgst: number | null,
+    cess: number | null,
+    amount: number | null,
+}
+
+type dataType = {
+  _id: string,
+  user: string,
+  invoiceId: string,
+  invoiceNumber: string,
+  orderDate: string,
+  dueDate: string,
+  companyName: string,
+  address1: string,
+  address2: string,
+  address3: string,
+  billToName: string,
+  billToAddress1: string,
+  billToAddress2: string,
+  billToAddress3: string,
+  notes: string,
+  tnc: string,
+  itemsData: ItemsData[],
+  finalAmount: number,
+}
+
+const DashboardPage = async () => {
   const session = await auth();
 
+  // Defining data, so that it can be used below
+  let data;
+
+  // Fetch request to get user invoices
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URI}/api/get-data`, {
+      method: "POST",
+      body: JSON.stringify({email: session?.user?.email}),
+      cache:"no-cache",
+      credentials: "include",
+    });
+    data = await res.json();
+  } catch (error) {
+    console.error("Error fetching data", error);
+  }
+
   const details = [
-    {name: "Total Invoices", icon: <SiGoogledocs size={28} color='blue'/>},
+    {name: "Total Invoices", value: data.invoices.length, icon: <SiGoogledocs size={28} color='blue'/>},
     {name: "Paid", icon: <SiTicktick size={28} color="green"/>},
     {name: "Pending", icon: <GiCancel size={28} color='orange'/>},
     {name: "Overdue", icon: <FaExclamationCircle size={28} color='red'/>},
   ];
-
-  const actions = [
-    {name: "view", action: "handleView", icon: <GrView size={18} />},
-    {name: "edit", action: "handleEdit", icon: <MdEdit size={18} />},
-    {name: "download", action: "handleDownload", icon: <FaDownload size={18} />},
-  ]
 
   return (
     <div className="dashboard-screen h-screen w-full bg-gray-200 p-5">
@@ -53,7 +95,7 @@ const page = async () => {
           <div className="box bg-blue-950 w-1/4 flex justify-between items-center text-white rounded-lg p-5" key={index}>
             <div className="box-left flex flex-col gap-1">
               <h1 className='font-facultyGlyphic'>{item.name}</h1>
-              <p className='font-bold text-xl font-poppins'>Value</p>
+              <p className='font-bold text-xl font-poppins'>{item.value ?? "Value"}</p>
             </div>
             <div className="box-right">
               {item.icon}
@@ -66,7 +108,7 @@ const page = async () => {
           <h1 className='font-poppins text-3xl'>Recent Invoices</h1>
           <table className="mt-5 table-auto w-full">
             <thead>
-              <tr className="bg-gray-100 text-left">
+              <tr className="bg-gray-100 text-left font-poppins">
                 <th className="px-4 py-2">Invoice #</th>
                 <th className="px-4 py-2">Client</th>
                 <th className="px-4 py-2">Amount</th>
@@ -76,29 +118,28 @@ const page = async () => {
               </tr>
             </thead>
             <tbody>
-              <tr className="border-b font-facultyGlyphic hover:bg-gray-50">
-                <td className="px-4 py-3 text-blue-600 font-semibold">#INV-001</td>
-                <td className="px-4 py-3">
-                  <div className="flex flex-col">
-                    <span className="font-medium">Pro Tech Limited</span>
-                    <span className="text-gray-500 text-xs">kushal@gmail.com</span>
-                  </div>
-                </td>
-                <td className="px-4 py-3 font-semibold">$499</td>
-                <td className="px-4 py-3">
-                  <span className="bg-yellow-100 text-yellow-700 text-[15px] font-semibold px-4 py-2 rounded-full">
-                    Pending
-                  </span>
-                </td>
-                <td className="px-4 py-3">25/07/2025</td>
-                <td className="px-2 py-3 space-x-4">
-                  {actions.map((item) => (
-                    <button key={item.name} className='bg-blue-400 p-2 rounded-lg'>
-                      {item.icon}
-                    </button>
-                  ))}
-                </td>
-              </tr>
+              {
+                data.invoices.map((item: dataType,index: number) => (
+                    <tr key={index} className="border-b font-facultyGlyphic hover:bg-gray-50">
+                      <td className="px-4 py-3 text-blue-600 font-semibold">{item.invoiceId}</td>
+                      <td className="px-4 py-3">
+                        <div className="flex flex-col">
+                          <span className="font-medium">{item.companyName}</span>
+                          <span className="text-gray-500 text-xs">kushal@gmail.com</span>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 font-semibold">${item.finalAmount}</td>
+                      <td className="px-2 py-3">
+                        <span className="bg-yellow-100 text-yellow-700 text-[15px] font-semibold px-4 py-2 rounded-full">
+                          Pending
+                        </span>
+                      </td>
+                      <td className="px-4 py-3">{dayjs(item.dueDate).format("DD-MM-YYYY")}</td>
+                      <DashboardActions id={item.invoiceId}/>
+                    </tr>
+                  )
+                )
+              }
             </tbody>
           </table>
         </div>
@@ -107,4 +148,4 @@ const page = async () => {
   )
 }
 
-export default page
+export default DashboardPage

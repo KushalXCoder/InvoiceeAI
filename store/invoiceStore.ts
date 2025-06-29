@@ -1,9 +1,12 @@
-import { getNanoId } from "@/lib/helper/nanoId";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+import dayjs from 'dayjs';
 
 type InvoiceData = {
     invoiceId: string,
+    invoiceNumber: string,
+    orderDate: string,
+    dueDate: string | null,
     companyName: string,
     logo: File | null,
     address1: string,
@@ -20,12 +23,15 @@ type InvoiceData = {
 type InvoiceStore = {
     data: InvoiceData,
     setField: (field: keyof InvoiceData, value: string | File | null) => void,
+    isInvoiceChanged: boolean,
     reset: () => void,
-    generateInvoiceId: () => void,
 };
 
 const initialInvoiceData: InvoiceData = {
     invoiceId: '',
+    invoiceNumber: '',
+    orderDate: dayjs().format("DD-MM-YYYY"),
+    dueDate: null,
     companyName: '',
     logo: null,
     address1: '',
@@ -46,19 +52,16 @@ export const useInvoiceStore = create<InvoiceStore>()(
             setField: (field, value) =>
                 set((state) => ({
                     data: { ...state.data, [field]: value },
+                    isInvoiceChanged: true,
                 })),
+            isInvoiceChanged: false,
             reset: () =>
                 set(() => ({
                     data: initialInvoiceData,
+                    isInvoiceChanged: false,
                 })),
-            generateInvoiceId: () =>
-                set((state) => ({
-                    data: {
-                        ...state.data,
-                        invoiceId: `${getNanoId()}`,
-                    },
-                })),
-        }),
+            }
+        ),
         {
             name: "invoice-storage",
             partialize: (state) => ({

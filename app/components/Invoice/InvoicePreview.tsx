@@ -4,6 +4,7 @@ import React from 'react';
 import { useInvoiceStore } from '@/store/invoiceStore';
 import Table from '../Table';
 import { useItemsStore } from '@/store/itemsStore';
+import dayjs from 'dayjs';
 
 declare module 'jspdf' {
   interface jsPDF {
@@ -35,9 +36,9 @@ const InvoicePreview = () => {
           <div className="invoice-details font-poppins flex flex-col gap-2 items-end text-[#374151]">
             <h1 className='text-4xl font-bold text-[#000000]'>INVOICE</h1>
             <div className="details text-sm flex flex-col gap-0 items-end">
-              <p>Invoice No: <span className='text-[#000000]'>123432</span></p>
-              <p>Order Date: <span className='text-[#000000]'>22/06/2025</span></p>
-              <p>Delivery Date: <span className='text-[#000000]'>22/07/2025</span></p>
+              <p>Invoice No: <span className='text-[#000000]'>{data.invoiceNumber}</span></p>
+              <p>Order Date: <span className='text-[#000000]'>{dayjs(data.orderDate).format("DD-MM-YYYY")}</span></p>
+              <p>Delivery Date: <span className='text-[#000000]'>{dayjs(data.dueDate).format("DD-MM-YYYY")}</span></p>
             </div>
           </div>
         </div>
@@ -104,10 +105,10 @@ const InvoicePreview = () => {
           </div>
         </div>
       </div>
-      <p className='user-note font-facultyGlyphic border border-red-500 rounded-lg p-3 mb-5'>
+      <div className='user-note font-facultyGlyphic border border-red-500 rounded-lg p-3 mb-5'>
         <h1 className='font-bold'>Important</h1>
         <p className='mt-1'>The above preview just helps in visualizing how the details would be in the invoice, this is not the final invoice. The final invoice epends on tempelate you choose on clicking download.</p>
-      </p>
+      </div>
     </div>
   );
 };
