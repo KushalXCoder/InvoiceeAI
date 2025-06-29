@@ -7,7 +7,7 @@ import { generatePdf } from '@/lib/helper/generatePdf';
 import { useItemsStore } from '@/store/itemsStore';
 
 const InvoiceDownload = () => {
-  const { data, setField, isInvoiceChanged } = useInvoiceStore();
+  const { data, setField, setInvoiceId, isInvoiceChanged } = useInvoiceStore();
   const { itemsData, findTotal, isItemsChanged } = useItemsStore();
 
   const handleDownload = async () => {
@@ -33,6 +33,7 @@ const InvoiceDownload = () => {
     const ans = await res.json();
     if(data.invoiceId === "") {
       setField("invoiceId",ans.invoice.invoiceId);
+      setInvoiceId(ans.invoice.invoiceId);
     }
   };
 

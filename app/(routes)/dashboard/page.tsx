@@ -8,7 +8,6 @@ import { GiCancel } from "react-icons/gi";
 import { FaExclamationCircle } from "react-icons/fa";
 import dayjs from 'dayjs';
 import DashboardActions from '@/app/components/Dashboard/DashboardActions';
-import { countInvoices } from '@/lib/helper/countInvoices';
 
 type ItemsData = {
     itemsDescription: string,

@@ -4,16 +4,6 @@ import { auth } from "@/auth";
 import connectDb from "@/lib/helper/connectDb";
 import { getNanoId } from "@/lib/helper/nanoId";
 
-// Comparing itemsData stored in db, and itesData getting from the request
-// function areItemsEqual(a: unknown[], b: unknown[]) {
-//   if (!Array.isArray(a) || !Array.isArray(b)) return false;
-//   if (a.length !== b.length) return false;
-
-//   return a.every((item, index) => {
-//     return JSON.stringify(item) === JSON.stringify(b[index]);
-//   });
-// }
-
 export const POST = async (req: NextRequest) => {
   try {
     // Connect to db
@@ -23,30 +13,15 @@ export const POST = async (req: NextRequest) => {
     const session = await auth();
     const { data, itemsData, totalAmount, isInvoiceChanged, isItemsChanged } = await req.json();
 
-    // Store the data in updates object
-    // const updates: { [key: string]: unknown } = {
-    //   invoiceNumber: data.invoiceNumber,
-    //   orderDate: data.orderDate,
-    //   dueDate: data.dueDate,
-    //   companyName: data.companyName,
-    //   address1: data.address1,
-    //   address2: data.address2,
-    //   address3: data.address3,
-    //   billToName: data.billToName,
-    //   billToAddress1: data.billToAddress1,
-    //   billToAddress2: data.billToAddress2,
-    //   billToAddress3: data.billToAddress3,
-    //   notes: data.notes,
-    //   tnc: data.tnc,
-    //   finalAmount: totalAmount,
-    // };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { invoiceId, ...safeData} = data;
 
     if(data.invoiceId === "") {
       const id = await getNanoId();
       const invoice = await Invoice.create({
         invoiceId: id,
         user: session?.user?.email,
-        ...data,
+        ...safeData,
         itemsData,
         finalAmount: totalAmount,
       });
@@ -57,11 +32,9 @@ export const POST = async (req: NextRequest) => {
     if(isInvoiceChanged || isItemsChanged) {
       const invoice = await Invoice.findOne({ invoiceId: data.invoiceId });
       if(isInvoiceChanged) {
-        Object.assign(invoice,data);
+        Object.assign(invoice,safeData);
       }
       else {
-        console.log(invoice.itemsData);
-        console.log(itemsData);
         invoice.itemsData = itemsData;
         invoice.finalAmount = totalAmount;
       }
@@ -69,27 +42,10 @@ export const POST = async (req: NextRequest) => {
       return NextResponse.json({ message: "Invoice Saved", invoice }, { status: 200 });
     }
 
-    // const invoice = await Invoice.findOne({ invoiceId: data.invoiceId });
-
-    // Check if any fields or items have changed
-    // let isDiff = false;
-    // for (const key in updates) {
-    //   if (invoice[key] !== updates[key]) {
-    //     isDiff = true;
-    //     break;
-    //   }
-    // }
-    // const itemsChanged = !areItemsEqual(invoice.itemsData || [], itemsData || []);
-
     // If no changes return
     else {
       return NextResponse.json({ message: "No changes detected" }, { status: 200 });
     }
-
-    // Make changes in db
-    // Object.assign(invoice, updates);
-    // if (itemsChanged) invoice.itemsData = itemsData;
-    // await invoice.save();
 
   } catch (error) {
     console.error("Error saving invoice", error);

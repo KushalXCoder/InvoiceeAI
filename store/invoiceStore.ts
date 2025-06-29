@@ -22,6 +22,8 @@ type InvoiceData = {
 
 type InvoiceStore = {
     data: InvoiceData,
+    currentInvoiceId: string,
+    setInvoiceId: (id: string) => void,
     setField: (field: keyof InvoiceData, value: string | File | null) => void,
     isInvoiceChanged: boolean,
     reset: () => void,
@@ -49,6 +51,11 @@ export const useInvoiceStore = create<InvoiceStore>()(
     persist(
         (set) => ({
             data: initialInvoiceData,
+            currentInvoiceId: '',
+            setInvoiceId: (id: string) => 
+                set(() => ({
+                    currentInvoiceId: id,
+                })),
             setField: (field, value) =>
                 set((state) => ({
                     data: { ...state.data, [field]: value },
@@ -59,16 +66,15 @@ export const useInvoiceStore = create<InvoiceStore>()(
                 set(() => ({
                     data: initialInvoiceData,
                     isInvoiceChanged: false,
+                    currentInvoiceId: '',
                 })),
             }
         ),
         {
             name: "invoice-storage",
             partialize: (state) => ({
-                data: {
-                    ...state.data,
-                    logo: null,
-                },
+                data: { ...state.data, logo: null },
+                currentInvoiceId: state.currentInvoiceId,
             }),
             storage: createJSONStorage(() => localStorage),
         }
