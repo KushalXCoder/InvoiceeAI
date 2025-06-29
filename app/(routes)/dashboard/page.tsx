@@ -8,6 +8,7 @@ import { GiCancel } from "react-icons/gi";
 import { FaExclamationCircle } from "react-icons/fa";
 import dayjs from 'dayjs';
 import DashboardActions from '@/app/components/Dashboard/DashboardActions';
+import { calculateValue } from '@/lib/helper/calculateValue';
 
 type ItemsData = {
     itemsDescription: string,
@@ -39,6 +40,7 @@ type dataType = {
   tnc: string,
   itemsData: ItemsData[],
   finalAmount: number,
+  status: string,
 }
 
 const DashboardPage = async () => {
@@ -62,9 +64,9 @@ const DashboardPage = async () => {
 
   const details = [
     {name: "Total Invoices", value: data.invoices.length, icon: <SiGoogledocs size={28} color='blue'/>},
-    {name: "Paid", icon: <SiTicktick size={28} color="green"/>},
-    {name: "Pending", icon: <GiCancel size={28} color='orange'/>},
-    {name: "Overdue", icon: <FaExclamationCircle size={28} color='red'/>},
+    {name: "Recieved", value: calculateValue(data.invoices,"recieved"), icon: <SiTicktick size={28} color="green"/>},
+    {name: "Pending", value: calculateValue(data.invoices,"pending"), icon: <GiCancel size={28} color='orange'/>},
+    {name: "Overdue", value: calculateValue(data.invoices,"overdue"), icon: <FaExclamationCircle size={28} color='red'/>},
   ];
 
   return (
@@ -94,7 +96,7 @@ const DashboardPage = async () => {
           <div className="box bg-blue-950 w-1/4 flex justify-between items-center text-white rounded-lg p-5" key={index}>
             <div className="box-left flex flex-col gap-1">
               <h1 className='font-facultyGlyphic'>{item.name}</h1>
-              <p className='font-bold text-xl font-poppins'>{item.value ?? "Value"}</p>
+              <p className='font-bold text-xl font-poppins'>{item.value ?? 0}</p>
             </div>
             <div className="box-right">
               {item.icon}
@@ -130,7 +132,7 @@ const DashboardPage = async () => {
                       <td className="px-4 py-3 font-semibold">${item.finalAmount}</td>
                       <td className="px-2 py-3">
                         <span className="bg-yellow-100 text-yellow-700 text-[15px] font-semibold px-4 py-2 rounded-full">
-                          Pending
+                          {item.status}
                         </span>
                       </td>
                       <td className="px-4 py-3">{dayjs(item.dueDate).format("DD-MM-YYYY")}</td>

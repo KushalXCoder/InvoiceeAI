@@ -20,7 +20,7 @@ const InvoicePreview = () => {
 
   return (
     <div className="invoice-preview w-4/6 px-10 pt-8 overflow-y-scroll">
-      <div className="document w-full h-fit bg-[#ffffff] rounded-lg px-8 py-10 mb-5">
+      <div className="document w-full h-fit bg-[#ffffff] rounded-lg px-8 py-10 mb-5 border">
         <div className="top-section flex justify-between">
           <div className="company-details flex flex-col gap-2">
             {data.logo && (
