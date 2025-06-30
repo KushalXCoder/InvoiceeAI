@@ -20,7 +20,7 @@ const SignInPage = () => {
             </div>
             <Form type="Signup"/>
             <p className='font-facultyGlyphic'>Already have an account ? 
-                <Link href="/register" className='underline hover:text-blue-600 transition-colors'> Sign In </Link>
+                <Link href="/login" className='underline hover:text-blue-600 transition-colors'> Sign In </Link>
             </p>
             <p className='font-facultyGlyphic border px-5 py-1 bg-blue-950 text-white rounded-lg'>Powered by InvoiceeAI</p>
         </div>

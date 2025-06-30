@@ -24,7 +24,9 @@ type InvoiceData = {
 
 const InvoiceInput = () => {
 
-  const { data, setField } = useInvoiceStore();
+  const { data, isEditing, editingData, setField } = useInvoiceStore();
+
+  const source = isEditing ? editingData : data;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, type, value, files } = e.target;
@@ -48,7 +50,7 @@ const InvoiceInput = () => {
             <input
               type="text"
               name='invoiceNumber'
-              value={data.invoiceNumber}
+              value={source.invoiceNumber}
               placeholder='123456'
               className='border p-2 w-full'
               onChange={handleChange}
@@ -59,7 +61,7 @@ const InvoiceInput = () => {
             <input
               type="date"
               name="orderDate"
-              value={data.orderDate}
+              value={source.orderDate}
               className='border p-2 w-full'
               onChange={handleChange}
             />
@@ -69,7 +71,7 @@ const InvoiceInput = () => {
             <input
               type="date"
               name="dueDate"
-              value={data.dueDate ?? ""}
+              value={source.dueDate ?? ""}
               className='border p-2 w-full'
               onChange={handleChange}
             />
@@ -99,7 +101,7 @@ const InvoiceInput = () => {
             <input
               type='text'
               name='companyName'
-              value={data.companyName}
+              value={source.companyName}
               placeholder='XYZ'
               className='border w-full p-2'
               onChange={handleChange}
@@ -112,7 +114,7 @@ const InvoiceInput = () => {
               <input
                 type="text"
                 name='address1'
-                value={data.address1}
+                value={source.address1}
                 placeholder='Office No., Tower Name'
                 className='border w-full p-2'
                 onChange={handleChange}
@@ -123,7 +125,7 @@ const InvoiceInput = () => {
               <input
                 type="text"
                 name='address2'
-                value={data.address2}
+                value={source.address2}
                 placeholder='Area, Sector'
                 className='border w-full p-2'
                 onChange={handleChange}
@@ -134,7 +136,7 @@ const InvoiceInput = () => {
               <input
                 type="text"
                 name='address3'
-                value={data.address3}
+                value={source.address3}
                 placeholder='City - Pincode'
                 className='border w-full p-2'
                 onChange={handleChange}
@@ -150,7 +152,7 @@ const InvoiceInput = () => {
             <input
               type="text"
               name='billToName'
-              value={data.billToName}
+              value={source.billToName}
               placeholder='XYZ'
               className='border w-full p-2'
               onChange={handleChange}
@@ -162,7 +164,7 @@ const InvoiceInput = () => {
               <input
                 type="text"
                 name='billToAddress1'
-                value={data.billToAddress1}
+                value={source.billToAddress1}
                 placeholder='Office No., Tower Name'
                 className='border w-full p-2'
                 onChange={handleChange}
@@ -173,7 +175,7 @@ const InvoiceInput = () => {
               <input
                 type="text"
                 name='billToAddress2'
-                value={data.billToAddress2}
+                value={source.billToAddress2}
                 placeholder='Area, Sector'
                 className='border w-full p-2'
                 onChange={handleChange}
@@ -184,7 +186,7 @@ const InvoiceInput = () => {
               <input
                 type="text"
                 name='billToAddress3'
-                value={data.billToAddress3}
+                value={source.billToAddress3}
                 placeholder='City - Pincode'
                 className='border w-full p-2'
                 onChange={handleChange}

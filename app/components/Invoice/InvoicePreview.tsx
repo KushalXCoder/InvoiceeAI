@@ -15,8 +15,11 @@ declare module 'jspdf' {
 }
 
 const InvoicePreview = () => {
-  const { data } = useInvoiceStore();
+  const { data, editingData, isEditing } = useInvoiceStore();
   const { findTotal } = useItemsStore();
+
+  const source = isEditing ? editingData : data;
+  const details = {...source};
 
   return (
     <div className="invoice-preview w-4/6 px-10 pt-8 overflow-y-scroll">
@@ -26,29 +29,29 @@ const InvoicePreview = () => {
             {data.logo && (
               <img src={URL.createObjectURL(data.logo)} alt="Company Logo" width={200} height={200} />
             )}
-            <p className='company-name font-poppins text-[19px]'>{data.companyName}</p>
+            <p className='company-name font-poppins text-[19px]'>{details.companyName}</p>
             <div className="company-address flex flex-col *:text-[#6b7280] font-poppins">
-              <p>{data.address1}</p>
-              <p>{data.address2}</p>
-              <p>{data.address3}</p>
+              <p>{details.address1}</p>
+              <p>{details.address2}</p>
+              <p>{details.address3}</p>
             </div>
           </div>
           <div className="invoice-details font-poppins flex flex-col gap-2 items-end text-[#374151]">
             <h1 className='text-4xl font-bold text-[#000000]'>INVOICE</h1>
             <div className="details text-sm flex flex-col gap-0 items-end">
-              <p>Invoice No: <span className='text-[#000000]'>{data.invoiceNumber}</span></p>
-              <p>Order Date: <span className='text-[#000000]'>{dayjs(data.orderDate).format("DD-MM-YYYY")}</span></p>
-              <p>Delivery Date: <span className='text-[#000000]'>{dayjs(data.dueDate).format("DD-MM-YYYY")}</span></p>
+              <p>Invoice No: <span className='text-[#000000]'>{details.invoiceNumber}</span></p>
+              <p>Order Date: <span className='text-[#000000]'>{dayjs(details.orderDate).format("DD-MM-YYYY")}</span></p>
+              <p>Delivery Date: <span className='text-[#000000]'>{dayjs(details.dueDate).format("DD-MM-YYYY")}</span></p>
             </div>
           </div>
         </div>
         <div className="bill-to-details font-poppins mt-5 flex flex-col">
           <h1 className='text-[#4b5563] text-xl'>Bill To</h1>
-          <h1 className='text-[19px] mt-2'>{data.billToName}</h1>
+          <h1 className='text-[19px] mt-2'>{details.billToName}</h1>
           <div className="flex flex-col mt-2 *:text-[#6b7280]">
-            <p>{data.billToAddress1}</p>
-            <p>{data.billToAddress2}</p>
-            <p>{data.billToAddress3}</p>
+            <p>{details.billToAddress1}</p>
+            <p>{details.billToAddress2}</p>
+            <p>{details.billToAddress3}</p>
           </div>
         </div>
         <div className="items-entries mt-10">
@@ -85,19 +88,19 @@ const InvoicePreview = () => {
         <div className="note font-poppins">
           <h1 className='text-[#6b7280] text-xl mt-10'>Notes</h1>
           <div className="w-full whitespace-pre-wrap break-words font-poppins text-sm py-3 leading-[1.4]">
-            {data.notes}
+            {details.notes}
           </div>
         </div>
         <div className="terms-and-conditions font-poppins">
           <h1 className='text-[#6b7280] text-xl mt-5'>Terms and Conditions</h1>
           <div className="w-full whitespace-pre-wrap break-words font-poppins text-sm py-3 leading-[1.4]">
-            {data.tnc}
+            {details.tnc}
           </div>
         </div>
         <div className="bottom-details w-full flex justify-between mt-5">
           <div className="issues-by flex flex-col items-start font-facultyGlyphic text-[#9ca3af]">
             <h1>Issued By</h1>
-            <h1 className='text-2xl'>{data.companyName}</h1>
+            <h1 className='text-2xl'>{details.companyName}</h1>
           </div>
           <div className="powered-by flex flex-col items-end font-facultyGlyphic text-[#9ca3af]">
             <h1>Powered By</h1>

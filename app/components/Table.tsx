@@ -1,4 +1,5 @@
 import { useItemsStore } from '@/store/itemsStore';
+import { useInvoiceStore } from '@/store/invoiceStore';
 import React from 'react';
 import { RxCross2 } from "react-icons/rx";
 import "../styles/table.css";
@@ -15,7 +16,7 @@ type ItemsData = {
 };
 
 const Table = () => {
-  const { itemsData, setField, addItem, removeItem } = useItemsStore();
+  const { itemsData, editingItemsData, setField, addItem, removeItem } = useItemsStore();
 
   const tableConfig = [
     { key: "itemsDescription", label: "Item Description", width: "w-[280px]" },
@@ -45,6 +46,9 @@ const Table = () => {
     setField(rowIndex, key, parsedValue);
   }
 
+  const isEditing = useInvoiceStore.getState().isEditing;
+  const source = isEditing ? editingItemsData : itemsData;
+
   return (
     <>
     <table className="table-fixed w-full border-collapse font-poppins text-[14px]">
@@ -57,7 +61,7 @@ const Table = () => {
             </tr>
         </thead>
         <tbody>
-            {itemsData.map((item, rowIndex) => (
+            {source.map((item, rowIndex) => (
             <>
             <tr key={rowIndex} className='w-full'>
                 {tableConfig.map((col, colIndex) => (

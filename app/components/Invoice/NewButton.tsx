@@ -5,11 +5,12 @@ import { useItemsStore } from '@/store/itemsStore';
 import React from 'react';
 
 const NewButton = () => {  
-  const { reset } = useInvoiceStore();
+  const { reset, setEdit } = useInvoiceStore();
   const { resetItems }  = useItemsStore();
 
   const handleClick = () => {
     reset();
+    setEdit(false);
     resetItems();
   }
 

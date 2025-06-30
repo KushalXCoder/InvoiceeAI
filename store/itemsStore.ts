@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+import { useInvoiceStore } from "./invoiceStore";
 
 type ItemsData = {
     itemsDescription: string,
@@ -14,6 +15,8 @@ type ItemsData = {
 
 type ItemsStore = {
     itemsData: ItemsData[],
+    editingItemsData: ItemsData[],
+    setEditingItemsData: (data: ItemsData[]) => void,
     setField: (index: number, field: keyof ItemsData, value: string | number | null) => void,
     addItem: () => void,
     removeItem: (index: number) => void,
@@ -38,9 +41,10 @@ export const useItemsStore = create<ItemsStore>() (
         itemsData: [initialItemsData],
         setField: (index,field,value) =>
             set((state) => {
-                const updatedItems = [...state.itemsData];
+                const isEditing = useInvoiceStore.getState().isEditing;
+                const items = isEditing ? [...state.editingItemsData] : [...state.itemsData];
                 const updatedItem = {
-                    ...updatedItems[index],
+                    ...items[index],
                     [field]: value,
                 };
                 const { qty, rate, igst, cgst, sgst, cess } = updatedItem;
@@ -49,21 +53,42 @@ export const useItemsStore = create<ItemsStore>() (
                     console.log((rate) * tax/100);
                     updatedItem.amount = (qty * rate) + ((qty * rate * tax)/100);
                 }
-                updatedItems[index] = updatedItem;
-                return { itemsData: updatedItems, isItemsChanged: true }
+                items[index] = updatedItem;
+
+                return isEditing
+                    ? { editingItemsData: items, isItemsChanged: true }
+                    : { itemsData: items, isItemsChanged: true };
             }),
         addItem: () => 
-            set((state) => ({
-                itemsData: [...state.itemsData, { ...initialItemsData }],
-                isItemsChanged: true,
-            })),
+            set((state) => {
+                if(useInvoiceStore.getState().isEditing) {
+                    return {
+                        editingItemsData: [...state.editingItemsData, { ...initialItemsData }],
+                        isItemsChanged: true,
+                    }
+                }
+                else {
+                    return {
+                        itemsData: [...state.itemsData, { ...initialItemsData }],
+                        isItemsChanged: true,
+                    }
+                }
+            }),
         removeItem: (index) =>
             set((state) => {
-                const newArray = state.itemsData.filter((_,i) => i != index);
-                return { itemsData: newArray, isItemsChanged: true };
+                if(useInvoiceStore.getState().isEditing) {
+                    const newArray = state.editingItemsData.filter((_,i) => i != index);
+                    return { editingItemsData: newArray, isItemsChanged: true };
+                }
+                else {
+                    const newArray = state.itemsData.filter((_,i) => i != index);
+                    return { itemsData: newArray, isItemsChanged: true };
+                }
             }),
         findTotal: (field) => {
-            return get().itemsData.reduce((sum: number, item: ItemsData) => {
+            const isEditing = useInvoiceStore.getState().isEditing;
+            const items = isEditing ? get().editingItemsData : get().itemsData;
+            return items.reduce((sum: number, item: ItemsData) => {
                 const taxTypes = ["igst", "cgst", "sgst", "cess"];
                 let val;
                 if(taxTypes.includes(field)) {
@@ -83,7 +108,12 @@ export const useItemsStore = create<ItemsStore>() (
             set(() => ({
                 itemsData: [initialItemsData],
                 isItemsChanged: false,
-            }))
+            })),
+        editingItemsData: [initialItemsData],
+        setEditingItemsData: (data) => 
+            set(() => ({
+                editingItemsData: data,
+            })),
     }),
     {
         name: "items-data",

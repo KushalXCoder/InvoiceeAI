@@ -71,7 +71,7 @@ export const useInvoiceStore = create<InvoiceStore>()(
                     }
                     else {
                         return {
-                            data: { ...state.editingData, [field]: value },
+                            editingData: { ...state.editingData, [field]: value },
                             isInvoiceChanged: true,
                         }
                     }
@@ -99,6 +99,8 @@ export const useInvoiceStore = create<InvoiceStore>()(
             partialize: (state) => ({
                 data: { ...state.data, logo: null },
                 currentInvoiceId: state.currentInvoiceId,
+                isEditing: state.isEditing,
+                editingData: { ...state.editingData }
             }),
             storage: createJSONStorage(() => localStorage),
         }

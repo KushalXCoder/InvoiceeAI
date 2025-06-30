@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { BsThreeDots } from "react-icons/bs";
 import { MdEdit } from "react-icons/md";
 import { FaDownload } from "react-icons/fa6";
@@ -19,22 +19,23 @@ const DashboardActions = ({id} : {id : string}) => {
   const [formData, setFormData] = useState({
     answer: "",
   });
-  const { currentInvoiceId, setEditingData, reset } = useInvoiceStore();
-  const { resetItems } = useItemsStore();
+  const { currentInvoiceId, setEdit, setEditingData, reset } = useInvoiceStore();
+  const { setEditingItemsData, resetItems } = useItemsStore();
 
   const handleEdit = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_URI}/api/get-invoice`, {
       method: "POST",
       body: JSON.stringify({id: id}),
     });
-    const resData = await res.json();
-    console.log(resData.invoice);
-    setEditingData(resData.invoice);
+    if(res.status === 200) {
+      const resData = await res.json();
+      setEdit(true);
+      setEditingData(resData.invoice.invoiceInfo);
+      setEditingItemsData(resData.invoice.itemsData);
+      console.log(useItemsStore.getState().editingItemsData);
+      router.push("/dashboard/invoice");
+    }
   }
-
-  useEffect(() => {
-    console.log(useInvoiceStore.getState().editingData);
-  }, []);
 
   const handleDownload = async () => {
     try {
@@ -63,9 +64,12 @@ const DashboardActions = ({id} : {id : string}) => {
         body: JSON.stringify({id: id}),
       });
       if (res.ok) {
+        console.log(currentInvoiceId);
+        console.log(id);
         if(currentInvoiceId === id) {
           reset();
           resetItems();
+          console.log("Done");
         }
         router.replace(window.location.pathname);
       }
