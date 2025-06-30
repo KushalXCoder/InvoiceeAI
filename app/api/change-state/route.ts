@@ -11,7 +11,7 @@ export const PATCH = async (req: NextRequest) => {
         const { statusName, id } = await req.json();
 
         // Find invoice by id
-        const invoice = await Invoice.findOne({invoiceId: id});
+        const invoice = await Invoice.findOne({"invoiceInfo.invoiceId": id});
         if(!invoice) {
             return NextResponse.json({message: "Invoice not found"}, {status: 400});
         }

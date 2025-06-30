@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsThreeDots } from "react-icons/bs";
 import { MdEdit } from "react-icons/md";
 import { FaDownload } from "react-icons/fa6";
@@ -19,12 +19,22 @@ const DashboardActions = ({id} : {id : string}) => {
   const [formData, setFormData] = useState({
     answer: "",
   });
-  const { currentInvoiceId, reset } = useInvoiceStore();
+  const { currentInvoiceId, setEditingData, reset } = useInvoiceStore();
   const { resetItems } = useItemsStore();
 
-  const handleEdit = () => {
-    console.log("Editing");
+  const handleEdit = async () => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URI}/api/get-invoice`, {
+      method: "POST",
+      body: JSON.stringify({id: id}),
+    });
+    const resData = await res.json();
+    console.log(resData.invoice);
+    setEditingData(resData.invoice);
   }
+
+  useEffect(() => {
+    console.log(useInvoiceStore.getState().editingData);
+  }, []);
 
   const handleDownload = async () => {
     try {

@@ -13,7 +13,7 @@ export const POST = async (req: NextRequest) => {
         await connectDb();
 
         // Find invoice
-        const invoice = await Invoice.findOne({invoiceId: id});
+        const invoice = await Invoice.findOne({"invoiceInfo.invoiceId": id});
         if(!invoice) {
             return NextResponse.json({message: "Invoice not found with this id"}, {status: 400});
         }

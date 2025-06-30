@@ -21,9 +21,7 @@ type ItemsData = {
     amount: number | null,
 }
 
-type dataType = {
-  _id: string,
-  user: string,
+type InvoiceData = {
   invoiceId: string,
   invoiceNumber: string,
   orderDate: string,
@@ -38,6 +36,12 @@ type dataType = {
   billToAddress3: string,
   notes: string,
   tnc: string,
+}
+
+type dataType = {
+  _id: string,
+  user: string,
+  invoiceInfo: InvoiceData,
   itemsData: ItemsData[],
   finalAmount: number,
   status: string,
@@ -122,10 +126,10 @@ const DashboardPage = async () => {
               {
                 data.invoices.map((item: dataType,index: number) => (
                     <tr key={index} className="border-b font-facultyGlyphic hover:bg-gray-50">
-                      <td className="px-4 py-3 text-blue-600 font-semibold">{item.invoiceId}</td>
+                      <td className="px-4 py-3 text-blue-600 font-semibold">{item.invoiceInfo.invoiceId}</td>
                       <td className="px-4 py-3">
                         <div className="flex flex-col">
-                          <span className="font-medium">{item.companyName}</span>
+                          <span className="font-medium">{item.invoiceInfo.companyName}</span>
                           <span className="text-gray-500 text-xs">kushal@gmail.com</span>
                         </div>
                       </td>
@@ -135,8 +139,8 @@ const DashboardPage = async () => {
                           {item.status}
                         </span>
                       </td>
-                      <td className="px-4 py-3">{dayjs(item.dueDate).format("DD-MM-YYYY")}</td>
-                      <DashboardActions id={item.invoiceId}/>
+                      <td className="px-4 py-3">{dayjs(item.invoiceInfo.dueDate).format("DD-MM-YYYY")}</td>
+                      <DashboardActions id={item.invoiceInfo.invoiceId}/>
                     </tr>
                   )
                 )

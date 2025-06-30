@@ -19,9 +19,11 @@ export const POST = async (req: NextRequest) => {
     if(data.invoiceId === "") {
       const id = await getNanoId();
       const invoice = await Invoice.create({
-        invoiceId: id,
+        invoiceInfo: {
+          invoiceId: id,
+          ...safeData,
+        },
         user: session?.user?.email,
-        ...safeData,
         itemsData,
         finalAmount: totalAmount,
       });
@@ -30,9 +32,9 @@ export const POST = async (req: NextRequest) => {
     }
 
     if(isInvoiceChanged || isItemsChanged) {
-      const invoice = await Invoice.findOne({ invoiceId: data.invoiceId });
+      const invoice = await Invoice.findOne({ "invoiceInfo.invoiceId": data.invoiceId });
       if(isInvoiceChanged) {
-        Object.assign(invoice,safeData);
+        Object.assign(invoice.invoiceInfo, safeData);
       }
       else {
         invoice.itemsData = itemsData;

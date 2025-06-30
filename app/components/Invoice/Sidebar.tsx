@@ -13,7 +13,6 @@ const Sidebar = () => {
   const sidebarLinks = [
     {name: "Home", icon: <IoHomeOutline className='h-6 w-6'/>, redirectTo: "/"},
     {name: "Invoice", icon: <TbFileInvoice className='h-6 w-6'/>, redirectTo: "/dashboard/invoice"},
-    {name: "Document", icon: <IoDocumentTextOutline className='h-6 w-6'/>, redirectTo: "/dashboard/documents"},
     {name: "Dashboard", icon: <IoDocumentTextOutline className='h-6 w-6'/>, redirectTo: "/dashboard"},
     // {name: "Templates"}
   ];

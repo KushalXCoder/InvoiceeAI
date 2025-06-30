@@ -10,7 +10,7 @@ export const DELETE = async (req: NextRequest) => {
         await connectDb();
 
         // Deleting Invoice
-        const deleteRes = await Invoice.deleteOne({invoiceId: id});
+        const deleteRes = await Invoice.deleteOne({"invoiceInfo.invoiceId": id});
         if(!deleteRes.acknowledged) {
             return NextResponse.json({message: "Invoice not found"}, {status: 400});
         }

@@ -26,6 +26,10 @@ type InvoiceStore = {
     setInvoiceId: (id: string) => void,
     setField: (field: keyof InvoiceData, value: string | File | null) => void,
     isInvoiceChanged: boolean,
+    isEditing: boolean,
+    setEdit: (value: boolean) => void,
+    editingData: InvoiceData,
+    setEditingData: (data: InvoiceData) => void,
     reset: () => void,
 };
 
@@ -56,12 +60,32 @@ export const useInvoiceStore = create<InvoiceStore>()(
                 set(() => ({
                     currentInvoiceId: id,
                 })),
+            isEditing: false,
             setField: (field, value) =>
-                set((state) => ({
-                    data: { ...state.data, [field]: value },
-                    isInvoiceChanged: true,
-                })),
+                set((state) => {
+                    if(state.isEditing === false) {
+                        return {
+                            data: { ...state.data, [field]: value },
+                            isInvoiceChanged: true,
+                        }
+                    }
+                    else {
+                        return {
+                            data: { ...state.editingData, [field]: value },
+                            isInvoiceChanged: true,
+                        }
+                    }
+                }),
             isInvoiceChanged: false,
+            setEdit: (value) =>
+                set(() => ({
+                    isEditing: value,
+                })),
+            editingData: initialInvoiceData,
+            setEditingData: (data) =>
+                set(() => ({
+                    editingData: data,
+                })),
             reset: () =>
                 set(() => ({
                     data: initialInvoiceData,
