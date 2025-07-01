@@ -7,18 +7,48 @@ import { MdEdit } from "react-icons/md";
 import { FaDownload } from "react-icons/fa6";
 import { generatePdf } from '@/lib/helper/generatePdf';
 import { MdDelete } from "react-icons/md";
+import { IoMdMail } from "react-icons/io";
 import { useRouter } from 'next/navigation';
 import { useInvoiceStore } from '@/store/invoiceStore';
 import { useItemsStore } from '@/store/itemsStore';
 
+type hoverState = {
+  flag: boolean,
+  itemName: string,
+}
+
 const DashboardActions = ({id} : {id : string}) => {
 
   const router = useRouter();
+
+  // All options hover
+  const [isHover, setIsHover] = useState<hoverState>({
+    flag: false,
+    itemName: "",
+  });
+
+  const handleMouseEnter = (itemName: string) => {
+    setIsHover({
+      flag: true,
+      itemName: itemName,
+    });
+  }
+
+  const handleMouseLeave = () => {
+    setIsHover({
+      flag: false,
+      itemName: "",
+    })
+  }
+
+  // For handle delete
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [deletePermission, setDeletePermission] = useState<boolean>(false);
   const [formData, setFormData] = useState({
     answer: "",
   });
+
+  // for handle edit and handle download
   const { currentInvoiceId, setEdit, setEditingData, reset } = useInvoiceStore();
   const { setEditingItemsData, resetItems } = useItemsStore();
 
@@ -45,12 +75,13 @@ const DashboardActions = ({id} : {id : string}) => {
       });
       const data = await res.json();
       console.log(data);
-      generatePdf(data.invoice, data.invoice.itemsData);
+      generatePdf(data.invoice, data.invoice.itemsData, "save");
     } catch (error) {
       console.error(error); 
     }
   }
 
+  // handle delete
   const handleDelete = () => {
     setDeletePermission(true);
   }
@@ -76,6 +107,7 @@ const DashboardActions = ({id} : {id : string}) => {
     }
   }
 
+  // handle status
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const status = [
@@ -94,10 +126,39 @@ const DashboardActions = ({id} : {id : string}) => {
     }
   }
 
+  // handle mail
+  const [sendMail, setSendMail] = useState<boolean>(false);
+  const [mailFormData, setMailFormData] = useState({
+    mail: "",
+  });
+
+  const handleMail = () => {
+    setSendMail(true);
+  }
+
+  const handleMailSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_URI}/api/send-email`, {
+        method: "POST",
+        body: JSON.stringify({email: mailFormData.mail, id: id}),
+      });
+      setSendMail(false);
+      const data = await res.json();
+      if(res.status != 200) {
+        console.log("Error sending mail", data.message);
+      }
+    } catch (error) {
+      console.log("Network or fetch error:", error);
+    }
+  }
+
+  // actions
   const actions = [
     {name: "status", icon: <BsThreeDots size={18} color='white' />},
     {name: "edit", action: handleEdit, icon: <MdEdit size={18} color='white' />},
     {name: "download", action: handleDownload, icon: <FaDownload size={18} color='white' />},
+    {name: "mail", action: handleMail, icon: <IoMdMail size={18} color='white' />},
     {name: "delete", action: handleDelete, icon: <MdDelete size={18} color='white' />}
   ];
 
@@ -115,7 +176,7 @@ const DashboardActions = ({id} : {id : string}) => {
                 >
                   {item.icon}
                   {isOpen && (
-                    <div className='status-options absolute top-8 right-0 h-fit w-fit flex flex-col bg-blue-950 text-white font-poppins border rounded-sm *:px-3 *:py-1 *:hover:bg-gray-500 *:border-b'>
+                    <div className='status-options absolute top-8 right-0 h-fit w-fit flex flex-col bg-blue-950 text-white font-poppins border rounded-sm *:px-3 *:py-1 *:hover:bg-gray-500 *:border-b z-10'>
                       {status.map((item,index) => (
                         <p key={index} onClick={() => handleStatusChange(item.name)} className='capitalize'>{item.name}</p>
                       ))}
@@ -123,9 +184,14 @@ const DashboardActions = ({id} : {id : string}) => {
                   )}
                 </button>
               ) : (
-                <button key={item.name} onClick={item.action} className='bg-black p-2 rounded-lg hover:shadow-[3px_3px_0px_0px_rgba(10,10,10,0.5)] cursor-pointer'>
-                  {item.icon}
-                </button>
+              <button key={item.name} onClick={item.action} onMouseEnter={() => handleMouseEnter(item.name)} onMouseLeave={() => handleMouseLeave()} className='relative bg-black p-2 rounded-lg hover:shadow-[3px_3px_0px_0px_rgba(10,10,10,0.5)] cursor-pointer'>
+                {item.icon}
+                {(isHover.flag && isHover.itemName === item.name) && (
+                  <div className="tool-tip h-fit w-fit px-4 py-2 bg-gray-500 text-white font-facultyGlyphic absolute top-10 rounded-lg z-10">
+                    <p className='capitalize'>{item.name}</p>
+                  </div>
+                )}
+              </button>
               )
           ))}
       </td>
@@ -141,6 +207,19 @@ const DashboardActions = ({id} : {id : string}) => {
             <div className="button-group flex mt-5 gap-3">
               <button type='submit' className='bg-red-500 hover:bg-red-600 rounded-lg w-1/4 px-4 py-2 text-white'>Delete</button>
               <button onClick={() => setDeletePermission(false)} className='border rounded-lg text-black px-4 py-2'>Cancel</button>
+            </div>
+          </form>
+        </div>
+      )}
+      {sendMail && (
+        <div className="send-email-box h-fit w-[600px] p-5 bg-white flex flex-col rounded-lg absolute top-10 left-[38%] backdrop-blur-lg font-poppins border">
+          <h1 className='font-facultyGlyphic font-bold text-blue-500 text-xl'>InvoiceeAI</h1>
+          <p className='mt-2 text-gray-700'>Whom you want to send this email to ? Enter one email at a time</p>
+          <form onSubmit={handleMailSubmit}>
+            <input type="email" value={mailFormData.mail ?? ""} placeholder='Enter email here' onChange={(e) => setMailFormData({mail: e.target.value})} className='px-4 py-2 outline-0 rounded-lg w-full border mt-2' required/>
+            <div className="button-group flex mt-5 gap-3">
+              <button type='submit' className='bg-blue-500 hover:bg-blue-600 rounded-lg w-1/4 px-4 py-2 text-white'>Send</button>
+              <button onClick={() => setSendMail(false)} className='border rounded-lg text-black px-4 py-2'>Cancel</button>
             </div>
           </form>
         </div>
