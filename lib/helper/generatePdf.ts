@@ -28,7 +28,7 @@ type ItemsData = {
     amount: number | null,
 }
 
-export const generatePdf = (finalData : InvoiceData, itemsData: ItemsData[]) => {
+export const generatePdf = (finalData : InvoiceData, itemsData: ItemsData[], type: string) => {
 
   const { findTotal } = useItemsStore.getState();
 
@@ -154,5 +154,11 @@ export const generatePdf = (finalData : InvoiceData, itemsData: ItemsData[]) => 
   doc.text(`${finalData.tnc}`, margin, termsY + 16, { maxWidth: 500 });
 
   // ==== Save ====
-  doc.save('invoice.pdf');
+  if(type === "save") {
+    doc.save('invoice.pdf');
+  }
+  else {
+    const pdfBuffer = doc.output("arraybuffer");
+    return Buffer.from(pdfBuffer);
+  }
 }

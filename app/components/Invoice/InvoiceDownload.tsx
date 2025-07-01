@@ -8,7 +8,7 @@ import { useItemsStore } from '@/store/itemsStore';
 
 const InvoiceDownload = () => {
   const { data, isEditing, setField, setInvoiceId, isInvoiceChanged } = useInvoiceStore();
-  const { itemsData, findTotal, isItemsChanged } = useItemsStore();
+  const { findTotal, isItemsChanged } = useItemsStore();
 
   const handleDownload = async () => {
     // Doing this to get the updated data
@@ -16,7 +16,7 @@ const InvoiceDownload = () => {
     const finalItemsData = isEditing ? useItemsStore.getState().editingItemsData : useItemsStore.getState().itemsData;
 
     // Generating pdf using required things
-    generatePdf(finalData, finalItemsData);
+    generatePdf(finalData, finalItemsData, "save");
 
     // Finding total amount, as to store it in database
     const totalAmount = findTotal("amount");
