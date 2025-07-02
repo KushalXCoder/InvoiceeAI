@@ -11,6 +11,7 @@ import { IoMdMail } from "react-icons/io";
 import { useRouter } from 'next/navigation';
 import { useInvoiceStore } from '@/store/invoiceStore';
 import { useItemsStore } from '@/store/itemsStore';
+import { motion } from 'motion/react';
 
 type hoverState = {
   flag: boolean,
@@ -128,6 +129,7 @@ const DashboardActions = ({id} : {id : string}) => {
 
   // handle mail
   const [sendMail, setSendMail] = useState<boolean>(false);
+  const [sending, setSending] = useState<boolean>(false);
   const [mailFormData, setMailFormData] = useState({
     mail: "",
   });
@@ -139,11 +141,14 @@ const DashboardActions = ({id} : {id : string}) => {
   const handleMailSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      setSending(true);
       const res = await fetch(`${process.env.NEXT_PUBLIC_URI}/api/send-email`, {
         method: "POST",
         body: JSON.stringify({email: mailFormData.mail, id: id}),
       });
+      setSending(false);
       setSendMail(false);
+      setMailFormData({mail: ''});
       const data = await res.json();
       if(res.status != 200) {
         console.log("Error sending mail", data.message);
@@ -199,7 +204,7 @@ const DashboardActions = ({id} : {id : string}) => {
         <p className='font-poppins text-2xl absolute top-1/2 left-1/2'>Deleting...</p>
       )}
       {deletePermission && (
-        <div className="delete-permission-box h-fit w-[600px] p-5 bg-white flex flex-col rounded-lg absolute top-10 left-[38%] backdrop-blur-lg font-poppins border">
+        <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: {duration: 0.7, ease: "easeIn"}}} className="delete-permission-box h-fit w-[600px] p-5 bg-white flex flex-col rounded-lg absolute top-10 left-[38%] backdrop-blur-lg font-poppins border">
           <h1 className='font-facultyGlyphic font-bold text-blue-500 text-xl'>InvoiceeAI</h1>
           <p className='mt-2 text-gray-700'>Are you sure you want to delete ? If, yes please type "YES" in the box below</p>
           <form onSubmit={handleSubmit}>
@@ -209,20 +214,23 @@ const DashboardActions = ({id} : {id : string}) => {
               <button onClick={() => setDeletePermission(false)} className='border rounded-lg text-black px-4 py-2'>Cancel</button>
             </div>
           </form>
-        </div>
+        </motion.div>
       )}
       {sendMail && (
-        <div className="send-email-box h-fit w-[600px] p-5 bg-white flex flex-col rounded-lg absolute top-10 left-[38%] backdrop-blur-lg font-poppins border">
+        <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: {duration: 0.7, ease: "easeIn"}}} className="send-email-box h-fit w-[600px] p-5 bg-white flex flex-col rounded-lg absolute top-10 left-[38%] backdrop-blur-lg font-poppins border">
           <h1 className='font-facultyGlyphic font-bold text-blue-500 text-xl'>InvoiceeAI</h1>
           <p className='mt-2 text-gray-700'>Whom you want to send this email to ? Enter one email at a time</p>
           <form onSubmit={handleMailSubmit}>
             <input type="email" value={mailFormData.mail ?? ""} placeholder='Enter email here' onChange={(e) => setMailFormData({mail: e.target.value})} className='px-4 py-2 outline-0 rounded-lg w-full border mt-2' required/>
-            <div className="button-group flex mt-5 gap-3">
+            <div className="button-group flex mt-5 gap-3 items-center">
               <button type='submit' className='bg-blue-500 hover:bg-blue-600 rounded-lg w-1/4 px-4 py-2 text-white'>Send</button>
               <button onClick={() => setSendMail(false)} className='border rounded-lg text-black px-4 py-2'>Cancel</button>
+              {sending && (
+                <p className='font-poppins text-red-500'>Mail is on the way ...</p>
+              )}
             </div>
           </form>
-        </div>
+        </motion.div>
       )}
     </>
   )
