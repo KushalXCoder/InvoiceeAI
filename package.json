@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@google/genai": "^1.8.0",
     "@react-pdf/renderer": "^4.3.0",
     "bcrypt": "^6.0.0",
     "dayjs": "^1.11.13",

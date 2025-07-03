@@ -49,13 +49,15 @@ const Table = () => {
   const isEditing = useInvoiceStore.getState().isEditing;
   const source = isEditing ? editingItemsData : itemsData;
 
+  console.log(useItemsStore.getState().itemsData);
+
   return (
     <>
     <table className="table-fixed w-full border-collapse font-poppins text-[14px]">
         <thead>
             <tr className="bg-[#1e3a8a] text-[#ffffff]">
             {tableConfig.map((col, i) => (
-                <th key={i} className={`py-2 px-2 text-left ${col.width}`}>{col.label}</th>
+                <th key={i} className={`py-2 px-2 text-left ${col.width} capitalize`}>{col.label}</th>
             ))}
             <th className='w-[25px]'></th>
             </tr>
@@ -71,7 +73,7 @@ const Table = () => {
                     value={item[col.key as keyof ItemsData] ?? ""}
                     onChange={(e) => handleChange(e, rowIndex)}
                     name={col.key}
-                    className="w-full border border-[#d1d5db] rounded-md text-sm outline-none px-2 py-1"
+                    className="w-full border border-[#d1d5db] rounded-md text-sm outline-none px-2 py-1 capitalize"
                     />
                 </td>
                 ))}
