@@ -16,7 +16,7 @@ export const POST = async (req: NextRequest) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { invoiceId, ...safeData} = data;
 
-    if(data.invoiceId === "") {
+    if(data.invoiceId === "" || data.invoiceId === undefined) {
       const id = await getNanoId();
       const invoice = await Invoice.create({
         invoiceInfo: {
@@ -32,11 +32,13 @@ export const POST = async (req: NextRequest) => {
     }
 
     if(isInvoiceChanged || isItemsChanged) {
+      console.log(data.invoiceId);
       const invoice = await Invoice.findOne({ "invoiceInfo.invoiceId": data.invoiceId });
       if(isInvoiceChanged) {
         Object.assign(invoice.invoiceInfo, safeData);
       }
       else {
+        console.log(itemsData);
         invoice.itemsData = itemsData;
         invoice.finalAmount = totalAmount;
       }

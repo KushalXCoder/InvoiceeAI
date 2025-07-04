@@ -21,6 +21,8 @@ type ItemsStore = {
     addItem: () => void,
     removeItem: (index: number) => void,
     findTotal: (field: keyof Omit<ItemsData,"itemsDescription">) => number,
+    shipping: number | null,
+    discount: number | null,
     isItemsChanged: boolean,
     resetItems: () => void;
 }
@@ -39,6 +41,8 @@ const initialItemsData: ItemsData = {
 export const useItemsStore = create<ItemsStore>() (
     persist ((set,get) => ({
         itemsData: [initialItemsData],
+        shipping: 0,
+        discount: 0,
         setField: (index,field,value) =>
             set((state) => {
                 const isEditing = useInvoiceStore.getState().isEditing;
@@ -107,6 +111,8 @@ export const useItemsStore = create<ItemsStore>() (
         resetItems: () =>
             set(() => ({
                 itemsData: [initialItemsData],
+                shipping: 0,
+                discount: 0,
                 isItemsChanged: false,
             })),
         editingItemsData: [initialItemsData],

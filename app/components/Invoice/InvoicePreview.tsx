@@ -57,13 +57,23 @@ const InvoicePreview = () => {
         <div className="items-entries mt-10">
           <Table/>
         </div>
-        <div className="w-full flex justify-end mt-5">
+        <div className="w-full flex justify-between mt-8">
+          <div className="cost-inputs flex gap-8">
+            <div className="shipping-cost flex flex-col font-poppins">
+              <label htmlFor="shipping">Shipping</label>
+              <input type="number" name='shipping' value={useItemsStore.getState().shipping ?? 0} onChange={(e) => useItemsStore.setState({shipping: Number(e.target.value)})} className='border rounded-lg px-3 py-1 mt-1 border-gray-300'/>
+            </div>
+            <div className="discount flex flex-col font-poppins">
+              <label htmlFor="discount">Discount</label>
+              <input type="number" name='discount' value={useItemsStore.getState().discount ?? 0} onChange={(e) => useItemsStore.setState({discount: Number(e.target.value)})} className='border rounded-lg px-3 py-1 mt-1 border-gray-300'/>
+            </div>
+          </div>
           <div className="w-fit flex flex-col px-8 py-5 font-poppins text-[15px] border border-[#9ca3af] bg-[#f3f4f6]">
             <div className="flex justify-between gap-10 mb-2">
               <span>Subtotal</span>
               <span>${findTotal("rate")}</span>
             </div>
-            <div className="flex justify-between gap-10 mb-2">
+            {/* <div className="flex justify-between gap-10 mb-2">
               <span>IGST</span>
               <span>${findTotal("igst")}</span>
             </div>
@@ -78,10 +88,22 @@ const InvoicePreview = () => {
             <div className="flex justify-between gap-10 mb-2">
               <span>CESS</span>
               <span>${findTotal("cess")}</span>
+            </div> */}
+            <div className="flex justify-between gap-10 mb-2">
+              <span>Tax</span>
+              <span>${findTotal("cgst") + findTotal("igst") + findTotal("sgst") + findTotal("cess")}</span>
+            </div>
+            <div className="flex justify-between gap-10 mb-2">
+              <span>Shipping</span>
+              <span>${useItemsStore.getState().shipping}</span>
+            </div>
+            <div className="flex justify-between gap-10 mb-2">
+              <span>Discount</span>
+              <span>${useItemsStore.getState().discount}</span>
             </div>
             <div className="flex justify-between items-center font-bold border-t-2 pt-2">
               <span>TOTAL</span>
-              <span>${findTotal("amount")}</span>
+              <span>${findTotal("amount") + (useItemsStore.getState().shipping ?? 0) - (useItemsStore.getState().discount ?? 0)}</span>
             </div>
           </div>
         </div>

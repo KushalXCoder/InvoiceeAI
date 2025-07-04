@@ -2,7 +2,6 @@ import { useItemsStore } from '@/store/itemsStore';
 import { useInvoiceStore } from '@/store/invoiceStore';
 import React from 'react';
 import { RxCross2 } from "react-icons/rx";
-import "../styles/table.css";
 
 type ItemsData = {
   itemsDescription: string,
@@ -80,10 +79,10 @@ const Table = () => {
                 <td className="w-[40px]">
                 {rowIndex !== 0 && (
                     <button
-                    className="w-full h-full flex items-center justify-center text-[#6b7280] transition-colors"
-                    onClick={() => handleRemove(rowIndex)}
+                      className="w-full h-full flex items-center justify-center text-[#6b7280] transition-colors"
+                      onClick={() => handleRemove(rowIndex)}
                     >
-                    <RxCross2 size={18} />
+                      <RxCross2 size={18} />
                     </button>
                 )}
                 </td>
@@ -93,7 +92,7 @@ const Table = () => {
         </tbody>
     </table>
     <div className="button mt-4">
-        <button className="px-4 py-2 rounded-lg bg-[#3b82f6] text-[#ffffff]" onClick={handleAdd}>
+        <button className="px-4 py-2 rounded-lg bg-[#3b82f6] text-[#ffffff] font-poppins hover:cursor-pointer hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]" onClick={handleAdd}>
             Add Item
         </button>
     </div>

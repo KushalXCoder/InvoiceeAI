@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { BiSolidSend } from "react-icons/bi";
 import { RxCross2 } from "react-icons/rx";
 import { useItemsStore } from '@/store/itemsStore';
+import { useInvoiceStore } from '@/store/invoiceStore';
+import { redirect } from 'next/navigation';
 
 type AiItemData = {
     item_description: string | "",
@@ -30,6 +32,7 @@ const UserForm = () => {
     const data = await res.json();
     let cleaned = data.ans;
 
+    // Cleaning the data
     cleaned = cleaned
         .replace(/```json/g, "") // remove ```json
         .replace(/```/g, "")     // remove ```
@@ -40,6 +43,7 @@ const UserForm = () => {
 
     // Reset the items data
     useItemsStore.getState().resetItems();
+    useInvoiceStore.getState().reset();
 
     // Map the data and store
     const updatedItems = parsed.invoice_details.items.map((item: AiItemData) => ({
@@ -58,7 +62,14 @@ const UserForm = () => {
         itemsData: updatedItems,
         isItemsChanged: true,
     });
-  }  
+
+    useInvoiceStore.setState({
+        data: { ...parsed.invoice_details.invoiceDetails },
+    });
+
+    console.log(useInvoiceStore.getState().data);
+    redirect("/dashboard/invoice");
+  }
 
   return (
     <>

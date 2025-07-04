@@ -226,7 +226,7 @@ const DashboardActions = ({id} : {id : string}) => {
               <button type='submit' className='bg-blue-500 hover:bg-blue-600 rounded-lg w-1/4 px-4 py-2 text-white'>Send</button>
               <button onClick={() => setSendMail(false)} className='border rounded-lg text-black px-4 py-2'>Cancel</button>
               {sending && (
-                <p className='font-poppins text-red-500'>Mail is on the way ...</p>
+                <div className='h-5 w-5 border-t-2 border-blue-700 rounded-full animate-spin absolute right-5'></div>
               )}
             </div>
           </form>

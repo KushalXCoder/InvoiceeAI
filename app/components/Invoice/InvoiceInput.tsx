@@ -4,6 +4,7 @@ import React from 'react';
 import { FaRegFileImage } from "react-icons/fa";
 import { useInvoiceStore } from '@/store/invoiceStore';
 import { FaRegLightbulb } from "react-icons/fa6";
+import dayjs from 'dayjs';
 
 type InvoiceData = {
   invoiceNumber: string,
@@ -61,7 +62,7 @@ const InvoiceInput = () => {
             <input
               type="date"
               name="orderDate"
-              value={source.orderDate}
+              value={dayjs(source.orderDate).format("DD-MM-YYYY") ?? ""}
               className='border p-2 w-full'
               onChange={handleChange}
             />
@@ -71,7 +72,7 @@ const InvoiceInput = () => {
             <input
               type="date"
               name="dueDate"
-              value={source.dueDate ?? ""}
+              value={dayjs(source.dueDate).format("DD-MM-YYYY") ?? ""}
               className='border p-2 w-full'
               onChange={handleChange}
             />

@@ -51,6 +51,12 @@ const InvoiceSchema = new mongoose.Schema({
     finalAmount: {
         type: Number,
     },
+    shipping: {
+        type: Number,
+    },
+    discount: {
+        type: Number,
+    },
     itemsData: {
         type: [Schema.Types.Mixed],
         default: [],

@@ -8,8 +8,8 @@ import { cookies } from 'next/headers';
 const Navbar = async () => {
   const navLinks = [
     {name: "Home", redirectTo: "/"},
-    {name: "Dashboard", redirectTo: "/dashboard/invoice"},
-    {name: "Features", redirectTo: "/"},
+    {name: "Dashboard", redirectTo: "/dashboard"},
+    {name: "Features", redirectTo: "#features"},
     {name: "Contact", redirectTo: "/"},
   ];
 

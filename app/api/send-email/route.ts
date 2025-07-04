@@ -36,7 +36,7 @@ export const POST = async (req: NextRequest) => {
         await transpoter.sendMail({
             from: `"InvoiceeAI" <${process.env.MAIL_ID}>`,
             to: email,
-            subject: "Remainder to pay the invoice amount",
+            subject: "Reminder to pay the invoice amount",
             text: `This is an reminder email from InvoiceeAI to pay the amount, given in the invoice attached below to ${invoice.invoiceInfo.companyName} before ${invoice.invoiceInfo.dueDate}. If, you have any issues, please contact the company regarding it. We are just an invoice generating and managing platform. Thanks for your cooperation.`,
             attachments: [
                 {

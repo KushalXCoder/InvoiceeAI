@@ -22,8 +22,12 @@ const InvoiceDownload = () => {
     const totalAmount = findTotal("amount");
 
     // Fetch request to generate invoice
+    console.log(finalItemsData);
     const res = await fetch(`${process.env.NEXT_PUBLIC_URI}/api/generate-invoice`, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({data: finalData, itemsData: finalItemsData, totalAmount, isInvoiceChanged, isItemsChanged}),
     })
 
