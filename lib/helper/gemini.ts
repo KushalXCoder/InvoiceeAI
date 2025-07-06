@@ -39,13 +39,17 @@ From the following text, extract all itemized billing details and return a valid
 }
 
 Instructions:
-- If order date is mentioned take that or if mentioned today's date then use ${dayjs().format()} and calculate 15 days from today or anything give in the input according taking ${dayjs().format()} as the reference or the mentioned date by user
-- Do not make assumptions or use todays date unless explicitly written in the text.
-- Only return the raw JSON object — no explanations, no markdown formatting.
+- If the user input is **not related to invoices**, respond normally and help as a general assistant.
+- If the input is related to invoices, follow the format strictly and return only the raw JSON object — no explanations, no markdown formatting.
+- If order date is mentioned, use that.
+- If not mentioned, use today's date as orderDate: "${dayjs().format()}".
+- Set dueDate to one month from today (or based on mentioned orderDate): "${dayjs().add(1, 'month').format()}".
+- Do not make assumptions unless clearly stated.
 - If any field is unclear or missing, set it to 'null'.
-- Ensure the JSON is valid and complete.
-- Divide the tax given by the user in such a way that all fields of tax (igst, cgst, sgst and cess) gets equal amount and it's sum is eaual to the input's tax
-- If not given then, auto generate the terms and conditions and notes for the user based on compny name and items
+- Divide the tax amount (if any) equally into igst, cgst, sgst, and cess — the sum must equal the given total tax.
+- If no tax is given, set all tax fields to 0.
+- If terms and conditions or notes are not provided, generate relevant ones based on the company name and the listed items.
+- Ensure the returned JSON is valid and parseable.
 
 Here is the input text:
 "${userInput}"
