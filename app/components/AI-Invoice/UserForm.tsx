@@ -6,6 +6,7 @@ import { RxCross2 } from "react-icons/rx";
 import { useItemsStore } from '@/store/itemsStore';
 import { useInvoiceStore } from '@/store/invoiceStore';
 import { useAiStore } from '@/store/aiStore';
+import Image from 'next/image';
 
 type AiItemData = {
     item_description: string | "",
@@ -124,7 +125,8 @@ const UserForm = () => {
 
   return (
     <>
-    <form onSubmit={handleSubmit} className={`user-input w-3/5 border rounded-lg flex items-center px-3 bg-white`}>
+    <form onSubmit={handleSubmit} className={`user-input w-3/5 border rounded-lg flex items-center px-3 bg-white gap-3`}>
+        <Image src="/Logo1.svg" alt='Logo Image' height={35} width={35} priority draggable={false}/>
         <input type="text" value={userInput} onChange={(e) => setUserInput(e.target.value)} className='outline-0 py-3 font-poppins w-full' placeholder='Generate me an invoice for 5 T-Shirts of rupees 299 each' required/>
         <button type='submit'>
             <BiSolidSend size={25} className='hover:text-blue-700 transition-colors'/>
@@ -133,7 +135,10 @@ const UserForm = () => {
     {notice && (
         <div className="notice absolute top-5 right-5 h-fit w-[380px] px-4 py-3 border-2 border-red-500 rounded-lg bg-white flex flex-col gap-2 shadow-xl">
             <div className="top flex justify-between items-center gap-3 font-facultyGlyphic">
-                <h1 className='text-blue-500 text-xl font-bold'>InvoiceeZ</h1>
+                <div className='flex items-center gap-3'>
+                    <Image src="/Logo1.svg" alt='Logo Image' height={30} width={30} priority draggable={false}/>
+                    <h1 className='text-blue-500 text-xl font-bold'>InvoiceeZ</h1>
+                </div>
                 <RxCross2 size={22} onClick={() => setNotice(false)}/>
             </div>
             <p className='font-poppins'>Please make sure, you have saved your invoice, you are working on, as using me, would overwrite it.</p>
