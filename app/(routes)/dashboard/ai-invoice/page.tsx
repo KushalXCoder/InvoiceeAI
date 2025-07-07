@@ -29,7 +29,7 @@ const AiInvoice = () => {
   }
 
   return (
-    <div className='ai-invoice-page h-screen w-full flex justify-center items-center'>
+    <div className='ai-invoice-page h-screen w-full flex justify-center items-center bg-[rgba(20,20,20,0.9)]'>
         {!chat ? (
           <div className="container-box flex flex-col items-center">
             <div className="user-welcome flex flex-col items-center font-poppins text-5xl font-bold">

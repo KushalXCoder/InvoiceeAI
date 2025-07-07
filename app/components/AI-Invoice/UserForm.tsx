@@ -25,6 +25,9 @@ const UserForm = () => {
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // Mark the chat state true
+    useAiStore.setState({ chat: true});
+
     // Get the chatId
     const chatId = useAiStore.getState().chatId;
 
@@ -39,9 +42,6 @@ const UserForm = () => {
     }
 
     useAiStore.getState().addChats(chat);
-
-    // Mark the chat state true
-    useAiStore.setState({ chat: true});
 
     // Mark the isThinking state equal to true
     useAiStore.setState({isThinking: true});
@@ -60,14 +60,19 @@ const UserForm = () => {
     }
 
     let parsed = data.ans;
-    if(typeof parsed === "string") {
+    if (typeof parsed === "string") {
         parsed = parsed
-        .replace(/```json/g, "") // remove ```json
-        .replace(/```/g, "")     // remove ```
-        .trim();
-        console.log(parsed);
+            .replace(/```json/g, "")
+            .replace(/```/g, "")
+            .replace(/\*/g, "")
+            .trim();
 
-        parsed = JSON.parse(parsed);
+        try {
+            parsed = JSON.parse(parsed);
+        } catch (e) {
+            // Still a string, leave it as-is
+            console.error("Failed to parse JSON:", e);
+        }
     }
 
     // Update the chat object and add to the store
@@ -85,10 +90,9 @@ const UserForm = () => {
     useItemsStore.getState().resetItems();
     useInvoiceStore.getState().reset();
 
-    console.log(parsed);
-
     // Map the data and store
-    const updatedItems = parsed.invoice_details.items.map((item: AiItemData) => ({
+    if(typeof parsed === "object") {
+        const updatedItems = parsed.invoice_details.items.map((item: AiItemData) => ({
         itemsDescription: item.item_description ?? "",
         qty: item.quantity ?? null,
         rate: item.unit_price ?? null,
@@ -112,11 +116,15 @@ const UserForm = () => {
     });
 
     console.log(useInvoiceStore.getState().data);
+    }
+    else {
+
+    }
   }
 
   return (
     <>
-    <form onSubmit={handleSubmit} className={`user-input mt-15 w-3/5 border rounded-lg flex items-center px-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]`}>
+    <form onSubmit={handleSubmit} className={`user-input w-3/5 border rounded-lg flex items-center px-3 bg-white`}>
         <input type="text" value={userInput} onChange={(e) => setUserInput(e.target.value)} className='outline-0 py-3 font-poppins w-full' placeholder='Generate me an invoice for 5 T-Shirts of rupees 299 each' required/>
         <button type='submit'>
             <BiSolidSend size={25} className='hover:text-blue-700 transition-colors'/>
