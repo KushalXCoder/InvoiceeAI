@@ -21,7 +21,7 @@ const Sidebar = () => {
   const pathname = usePathname();
 
   return (
-    <aside className='row-span-2 col-start-1 w-full px-4 py-8 flex flex-col items-start bg-white'>
+    <aside className='row-span-2 col-start-1 w-full px-4 py-8 flex flex-col items-start bg-white max-lg:hidden'>
         <Link href="/" className='logo'>
             <Image src="/Logo.svg" alt='Logo' height={200} width={200} priority draggable={false}/>
         </Link>

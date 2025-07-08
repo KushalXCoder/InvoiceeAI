@@ -2,7 +2,7 @@ import Hero from "./components/Hero";
 import ImageTab from "./components/ImageTab";
 import Navbar from "./components/Navbar";
 import { Meteors } from "./components/ui/Meteors";
-import Uses from "./components/Uses";
+// import Uses from "./components/Uses";
 
 export default function Home() {
   return (
@@ -11,9 +11,9 @@ export default function Home() {
       <Navbar/>
       <Hero/>
       <ImageTab/>
-      <div id="features" className="uses-container h-[100vh] w-full relative py-20">
+      {/* <div id="features" className="uses-container h-[100vh] w-full relative py-20">
         <Uses/>
-      </div>
+      </div> */}
     </div>
   );
 }

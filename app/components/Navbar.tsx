@@ -4,6 +4,7 @@ import React from 'react';
 import { auth } from '@/auth';
 import LogoutButton from './LogoutButton';
 import { cookies } from 'next/headers';
+import BurgerMenu from './BurgerMenu';
 
 const Navbar = async () => {
   const navLinks = [
@@ -18,16 +19,16 @@ const Navbar = async () => {
   const token = cookieStore.get("token")?.name;
 
   return (
-    <nav className='w-screen h-14 absolute top-0 py-10 px-16 flex items-center justify-between font-facultyGlyphic bg-white z-10'>
+    <nav className='w-screen h-14 absolute top-0 py-10 px-16 max-lg:px-5 flex items-center justify-between font-facultyGlyphic bg-white z-10'>
         <Link href="/">
-            <Image src="/Logo.svg" alt='InvoiceeAI' height={200} width={200} priority draggable={false}/>
+            <Image src="/Logo.svg" alt='InvoiceeAI' height={100} width={100} priority draggable={false} className='h-auto max-lg:w-40 w-60'/>
         </Link>
-        <ul className="nav-options flex gap-10">
+        <ul className="nav-options flex gap-10 max-lg:hidden">
             {navLinks.map((item,index) => (
                 <Link key={index} href={item.redirectTo} className='relative'>{item.name}</Link>
             ))}
         </ul>
-        <div className="authentication-buttons flex gap-5">
+        <div className="authentication-buttons flex gap-5 max-lg:hidden">
             {session?.user || token ? (
                 <LogoutButton/>
             ) : (
@@ -41,6 +42,7 @@ const Navbar = async () => {
                 </>
             )}
         </div>
+        <BurgerMenu session={session} token={token ?? ""}/>
     </nav>
   )
 }

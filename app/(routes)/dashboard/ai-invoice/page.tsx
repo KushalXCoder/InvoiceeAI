@@ -29,10 +29,10 @@ const AiInvoice = () => {
   }
 
   return (
-    <div className='ai-invoice-page h-screen w-full flex justify-center items-center bg-[rgba(20,20,20,0.9)]'>
+    <div className='ai-invoice-page h-screen w-full flex justify-center items-center'>
         {!chat ? (
           <div className="container-box flex flex-col items-center">
-            <div className="user-welcome flex flex-col items-center font-poppins text-5xl font-bold">
+            <div className="user-welcome flex flex-col items-center font-poppins text-5xl font-bold mb-10">
                 <h1 className="flex items-center gap-2">
                   Welcome to 
                   <span className="text-blue-500 hover:text-blue-700 transition-colors font-facultyGlyphic ml-1">

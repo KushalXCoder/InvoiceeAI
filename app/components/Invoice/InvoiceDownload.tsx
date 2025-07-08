@@ -43,9 +43,9 @@ const InvoiceDownload = () => {
   };
 
   return (
-    <button onClick={handleDownload} className='flex items-center gap-3 bg-blue-600 px-4 py-2 text-white rounded-lg cursor-pointer shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'>
-        <FaRegFilePdf size={22}/>
-        Save as PDF
+    <button onClick={handleDownload} className='flex justify-center items-center max-lg:h-fit max-lg:w-1/2 gap-3 bg-blue-600 px-4 max-lg:py-2 py-3 max-lg:text-[12px] text-white rounded-lg cursor-pointer'>
+        <FaRegFilePdf size={22} className='max-lg:hidden'/>
+        Save
     </button>
   )
 }

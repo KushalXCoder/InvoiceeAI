@@ -56,7 +56,7 @@ const Table = () => {
         <thead>
             <tr className="bg-[#1e3a8a] text-[#ffffff]">
             {tableConfig.map((col, i) => (
-                <th key={i} className={`py-2 px-2 text-left ${col.width} capitalize`}>{col.label}</th>
+                <th key={i} className={`py-2 px-2 text-left ${col.width} capitalize max-lg:text-[12px]`}>{col.label}</th>
             ))}
             <th className='w-[25px]'></th>
             </tr>
@@ -92,7 +92,7 @@ const Table = () => {
         </tbody>
     </table>
     <div className="button mt-4">
-        <button className="px-4 py-2 rounded-lg bg-[#3b82f6] text-[#ffffff] font-poppins hover:cursor-pointer hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]" onClick={handleAdd}>
+        <button className="px-4 py-2 rounded-lg bg-[#3b82f6] text-[#ffffff] font-poppins hover:cursor-pointer hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] max-lg:text-sm" onClick={handleAdd}>
             Add Item
         </button>
     </div>

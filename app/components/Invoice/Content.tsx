@@ -6,7 +6,7 @@ const Content = () => {
   return (
         <main className='row-start-2 col-start-2 dashboard-content ms-1 flex overflow-hidden'>
           <InvoicePreview/>
-          <InvoiceInput/>
+          <InvoiceInput screen=""/>
         </main>
   )
 }

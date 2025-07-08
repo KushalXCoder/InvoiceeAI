@@ -15,8 +15,8 @@ const NewButton = () => {
   }
 
   return (
-    <button onClick={handleClick} className='new-invoice px-4 py-2 bg-blue-600 rounded-lg text-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] cursor-pointer'>
-        New Invoice
+    <button onClick={handleClick} className='new-invoice max-lg:h-fit max-lg:w-1/2 px-4 max-lg:py-2 py-3 max-lg:text-[12px] bg-blue-600 rounded-lg text-white cursor-pointer'>
+        New
     </button>
   )
 }

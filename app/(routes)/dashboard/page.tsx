@@ -76,7 +76,7 @@ const DashboardPage = async () => {
   ];
 
   return (
-    <div className="dashboard-screen h-screen w-full bg-gray-200 p-5">
+    <div className="dashboard-screen h-fit w-full bg-gray-200 p-5">
       <div className="dashboard-top h-25 w-full bg-white rounded-lg flex justify-between items-center px-12 shadow-lg">
         <div className="left flex flex-col font-facultyGlyphic">
           <h1 className='text-3xl font-bold text-blue-500'>Invoice Dashboard</h1>
@@ -97,9 +97,9 @@ const DashboardPage = async () => {
           }
         </div>
       </div>
-      <div className="invoices-details w-full flex justify-between gap-10 mt-8">
+      <div className="invoices-details w-full flex max-lg:flex-wrap max-lg:justify-center gap-10 max-lg:gap-5 mt-8">
         {details.map((item,index) => (
-          <div className="box bg-blue-950 w-1/4 flex justify-between items-center text-white rounded-lg p-5" key={index}>
+          <div className="box bg-blue-950 w-1/4 max-lg:w-2/5 flex justify-between items-center text-white rounded-lg p-5" key={index}>
             <div className="box-left flex flex-col gap-1">
               <h1 className='font-facultyGlyphic'>{item.name}</h1>
               <p className='font-bold text-xl font-poppins'>{item.value ?? 0}</p>
@@ -115,7 +115,7 @@ const DashboardPage = async () => {
           <h1 className='font-poppins text-3xl'>Recent Invoices</h1>
           <table className="mt-5 table-auto w-full">
             <thead>
-              <tr className="bg-gray-100 text-left font-poppins">
+              <tr className="bg-gray-100 text-left font-poppins *:text-[14px]">
                 <th className="px-4 py-2">Invoice #</th>
                 <th className="px-4 py-2">Client</th>
                 <th className="px-4 py-2">Amount</th>

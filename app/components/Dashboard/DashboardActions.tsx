@@ -8,6 +8,7 @@ import { FaDownload } from "react-icons/fa6";
 import { generatePdf } from '@/lib/helper/generatePdf';
 import { MdDelete } from "react-icons/md";
 import { IoMdMail } from "react-icons/io";
+import { MdOutlinePublishedWithChanges } from "react-icons/md";
 import { useRouter } from 'next/navigation';
 import { useInvoiceStore } from '@/store/invoiceStore';
 import { useItemsStore } from '@/store/itemsStore';
@@ -20,7 +21,7 @@ type hoverState = {
 
 const DashboardActions = ({id} : {id : string}) => {
 
-  const router = useRouter();
+  const router = useRouter(); 
 
   // All options hover
   const [isHover, setIsHover] = useState<hoverState>({
@@ -167,38 +168,73 @@ const DashboardActions = ({id} : {id : string}) => {
     {name: "delete", action: handleDelete, icon: <MdDelete size={18} color='white' />}
   ];
 
+  // Handle Actions Mobile
+  const [handleAction, setHandleAction] = useState<boolean>(false);
+
   return (
     <>
-      <td className="px-2 py-3 space-x-4">
+      <td className="hidden max-lg:table-cell align-middle text-center">
+        <div className="flex justify-center items-center h-full min-h-[2rem] relative">
+          <BsThreeDots size={28} color='white' className='border p-1 rounded-lg bg-black shadow-[3px_3px_0px_0px_rgba(10,10,10,0.5)]' onClick={() => setHandleAction(!handleAction)}/>
+          {handleAction && (
+            <div className='flex flex-col absolute top-10 right-0 bg-gray-300 p-2 rounded-lg z-10'>
+              {actions.map((item,index) => (
+                item.name === "status" ? "" : (
+                  <p key={index} onClick={item.action} className='capitalize border-b w-full text-start mb-1'>{item.name}</p>
+                )
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="flex justify-center items-center h-full min-h-[2rem] relative">
+          <MdOutlinePublishedWithChanges size={28} color='white' className='border p-1 rounded-lg bg-black shadow-[3px_3px_0px_0px_rgba(10,10,10,0.5)]' onClick={() => setIsOpen(!isOpen)}/>
+          {isOpen && (
+            <div className='absolute top-10 right-0 w-fit flex flex-col bg-blue-950 text-white font-poppins border rounded-sm *:px-3 *:py-1 *:hover:bg-gray-500 *:border-b z-10'>
+              {status.map((s, index) => (
+                <p key={index} onClick={() => handleStatusChange(s.name)} className='capitalize cursor-pointer'>{s.name}</p>
+              ))}
+            </div>
+          )}
+        </div>
+      </td>
+      <td className="px-2 py-3 max-lg:hidden">
+        <div className="flex flex-wrap gap-2 justify-center items-center">
           {actions.map((item) => (
-              item.name === "status" ? (
+            item.name === "status" ? (
+              <div key={item.name} className="relative">
                 <button
-                  key={item.name}
-                  onClick={item.action}
-                  className='bg-black relative p-2 rounded-lg hover:shadow-[3px_3px_0px_0px_rgba(10,10,10,0.5)] cursor-pointer'
-                  onMouseEnter={() => setIsOpen(true)}
-                  onMouseLeave={() => setIsOpen(false)}
+                  className='bg-black p-2 rounded-lg hover:shadow-[3px_3px_0px_0px_rgba(10,10,10,0.5)]'
+                  onClick={() => setIsOpen(!isOpen)}
                 >
                   {item.icon}
-                  {isOpen && (
-                    <div className='status-options absolute top-8 right-0 h-fit w-fit flex flex-col bg-blue-950 text-white font-poppins border rounded-sm *:px-3 *:py-1 *:hover:bg-gray-500 *:border-b z-10'>
-                      {status.map((item,index) => (
-                        <p key={index} onClick={() => handleStatusChange(item.name)} className='capitalize'>{item.name}</p>
-                      ))}
-                    </div>
-                  )}
                 </button>
-              ) : (
-              <button key={item.name} onClick={item.action} onMouseEnter={() => handleMouseEnter(item.name)} onMouseLeave={() => handleMouseLeave()} className='relative bg-black p-2 rounded-lg hover:shadow-[3px_3px_0px_0px_rgba(10,10,10,0.5)] cursor-pointer'>
-                {item.icon}
-                {(isHover.flag && isHover.itemName === item.name) && (
-                  <div className="tool-tip h-fit w-fit px-4 py-2 bg-gray-500 text-white font-facultyGlyphic absolute top-10 rounded-lg z-10">
-                    <p className='capitalize'>{item.name}</p>
+                {isOpen && (
+                  <div className='absolute top-10 right-0 w-fit flex flex-col bg-blue-950 text-white font-poppins border rounded-sm *:px-3 *:py-1 *:hover:bg-gray-500 *:border-b z-10'>
+                    {status.map((s, index) => (
+                      <p key={index} onClick={() => handleStatusChange(s.name)} className='capitalize cursor-pointer'>{s.name}</p>
+                    ))}
                   </div>
                 )}
-              </button>
-              )
+              </div>
+            ) : (
+              <div key={item.name} className="relative">
+                <button
+                  onClick={item.action}
+                  onMouseEnter={() => handleMouseEnter(item.name)}
+                  onMouseLeave={handleMouseLeave}
+                  className='bg-black p-2 rounded-lg hover:shadow-[3px_3px_0px_0px_rgba(10,10,10,0.5)]'
+                >
+                  {item.icon}
+                </button>
+                {(isHover.flag && isHover.itemName === item.name) && (
+                  <div className="absolute top-10 left-1/2 -translate-x-1/2 px-3 py-1 bg-gray-600 text-white text-sm rounded-md shadow-lg z-20 whitespace-nowrap">
+                    {item.name}
+                  </div>
+                )}
+              </div>
+            )
           ))}
+        </div>
       </td>
       {isDeleting && (
         <p className='font-poppins text-2xl absolute top-1/2 left-1/2'>Deleting...</p>
