@@ -9,8 +9,6 @@ import { RiRobot3Fill } from "react-icons/ri";
 const AiInvoice = () => {
   const hasHydrated = useAiStore.getState().hasHydrated;
   const chat = useAiStore.getState().chat;
-  console.log(chat);
-  console.log(useAiStore.getState().chatId);
 
   if(!hasHydrated){
     return (

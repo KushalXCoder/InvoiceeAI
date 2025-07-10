@@ -33,10 +33,11 @@ const InvoiceInput = ({ screen }: { screen: string }) => {
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    const { name, type, value, files } = e.target;
+    const { name, type, value } = e.target;
     const key = name as keyof InvoiceData;
     if (type === "file") {
-      setField(key, files?.[0] || null);
+      const target = e.target as HTMLInputElement;
+      setField(key, target.files?.[0] || null);
     } else {
       setField(key, value);
     }

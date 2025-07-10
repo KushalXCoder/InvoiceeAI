@@ -61,6 +61,6 @@ body {
   background-color: yellow;
 }
 
-.invoice-preview, .invoice-details, .chat-area {
+.invoice-preview, .invoice-details, .chat-area, .table-container {
   scrollbar-width: none;
 }

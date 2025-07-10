@@ -22,7 +22,6 @@ type AiStore = {
 
 export const useAiStore = create<AiStore>() (
     persist (
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         (set) => ({
                 chat: false,
                 chats: [],

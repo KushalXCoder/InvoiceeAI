@@ -7,6 +7,7 @@ import { useItemsStore } from '@/store/itemsStore';
 import { useInvoiceStore } from '@/store/invoiceStore';
 import { useAiStore } from '@/store/aiStore';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 type AiItemData = {
     item_description: string | "",
@@ -22,12 +23,16 @@ type AiItemData = {
 const UserForm = () => {
    const [userInput, setUserInput] = useState<string>("");
    const [notice, setNotice] = useState<boolean>(true);
+   const router = useRouter();
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Mark the chat state true
-    useAiStore.setState({ chat: true});
+    if(!useAiStore.getState().chat) {
+        useAiStore.setState({ chat: true});
+        router.push("/dashboard/ai-invoice");
+    }
 
     // Get the chatId
     const chatId = useAiStore.getState().chatId;
@@ -67,12 +72,11 @@ const UserForm = () => {
             .replace(/```/g, "")
             .replace(/\*/g, "")
             .trim();
-
         try {
             parsed = JSON.parse(parsed);
         } catch (e) {
             // Still a string, leave it as-is
-            console.error("Failed to parse JSON:", e);
+            console.error("Still a string:", e);
         }
     }
 
@@ -87,12 +91,13 @@ const UserForm = () => {
     // Set the isThinking state equals to false
     useAiStore.setState({isThinking: false});
 
-    // Reset the items data
-    useItemsStore.getState().resetItems();
-    useInvoiceStore.getState().reset();
-
     // Map the data and store
-    if(typeof parsed === "object") {
+    if(typeof parsed === "object" && parsed.invoice_details) {
+        // Reset the items data
+        useItemsStore.getState().resetItems();
+        useInvoiceStore.getState().reset();
+
+        // Get the updatedItems
         const updatedItems = parsed.invoice_details.items.map((item: AiItemData) => ({
         itemsDescription: item.item_description ?? "",
         qty: item.quantity ?? null,
@@ -117,9 +122,6 @@ const UserForm = () => {
     });
 
     console.log(useInvoiceStore.getState().data);
-    }
-    else {
-
     }
   }
 

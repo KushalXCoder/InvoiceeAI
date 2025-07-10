@@ -104,7 +104,7 @@ const DashboardActions = ({id} : {id : string}) => {
           resetItems();
           console.log("Done");
         }
-        router.replace(window.location.pathname);
+        router.push("/dashboard");
       }
     }
   }
@@ -124,7 +124,7 @@ const DashboardActions = ({id} : {id : string}) => {
       body: JSON.stringify({statusName: statusName, id: id}),
     });
     if(res.status === 200) {
-      router.replace(window.location.pathname);
+      router.push("/dashboard");
     }
   }
 

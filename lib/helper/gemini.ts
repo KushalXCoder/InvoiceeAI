@@ -1,11 +1,27 @@
 import { GoogleGenAI } from "@google/genai";
 import dayjs from "dayjs";
 
+interface Chats {
+  sender: string,
+  content: string,
+}
+
+// interface ChatHistory {
+//   _id: string,
+//   chats: Chats[],
+//   __v: number,
+// }
+
+// interface ChatProps {
+//   userInput: string,
+//   chatHistory: ChatHistory[], 
+// }
+
 const ai = new GoogleGenAI({
     apiKey: process.env.GEMINI_API_KEY,
 });
 
-const UseAI = async(userInput: string) => {
+const UseAI = async(userInput: string, chatHistory: Chats[]) => {
     try {
         const prompt = `
 You are an intelligent invoice data extractor.
@@ -40,6 +56,7 @@ From the following text, extract all itemized billing details and return a valid
 
 Instructions:
 - If the user asks "who are you" or "what can you do", respond by saying you are InvoiceeZ — an AI assistant specialized in creating and extracting invoice data.
+- Also, take in consider the chat history provided to you to give the answer
 - If, no details are provided, then you should return to user saying please give some details or soemthing else like that
 - If the user input is **not related to invoices**, respond normally and help as a general assistant.
 - If the input is related to invoices, follow the format strictly and return only the raw JSON object — no explanations, no markdown formatting.
@@ -55,8 +72,10 @@ Instructions:
 
 Here is the input text:
 "${userInput}"
-`;
 
+Here is the chat history:
+"${chatHistory.map(m => `${m.sender === "user" ? "User" : "Bot"}: ${m.content}`).join('\n')}"
+`;
         const res = await ai.models.generateContent({
             model: "gemini-2.5-flash",
             contents: prompt,

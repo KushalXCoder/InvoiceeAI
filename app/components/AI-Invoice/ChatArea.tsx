@@ -4,10 +4,13 @@ import React, { useEffect, useRef } from 'react';
 import UserForm from './UserForm';
 import { useAiStore } from '@/store/aiStore';
 import Link from 'next/link';
+import { RiChatNewFill } from "react-icons/ri";
+import { useRouter } from 'next/navigation';
 
 const ChatArea = () => {
   const chats = useAiStore((state) => state.chats);
   const bottomRef = useRef<HTMLDivElement | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     if(bottomRef.current) {
@@ -16,6 +19,12 @@ const ChatArea = () => {
   }, [chats]);
 
   const isThinking = useAiStore((state) => state.isThinking);
+
+  const handleNewChat = () => {
+    useAiStore.setState({ chat: false, chatId: ""});
+    router.push("/dashboard/ai-invoice");
+    useAiStore.getState().setChats([]);
+  }
 
   return (
     <div className="h-screen w-full flex flex-col font-poppins bg-zinc-900 text-white">
@@ -30,8 +39,8 @@ const ChatArea = () => {
                     >
                         <div
                             className={`
-                            max-w-[80%] px-5 py-3 rounded-xl shadow-md text-sm break-words
-                            ${item.sender === "user" ? "bg-blue-600 text-white rounded-bl-none" : "bg-zinc-800 text-gray-100 rounded-br-none"}
+                            px-5 py-3 rounded-xl shadow-md text-sm break-words
+                            ${item.sender === "user" ? "bg-blue-600 text-white rounded-bl-none max-w-[50%]" : "bg-zinc-800 text-gray-100 rounded-br-none max-w-[80%]"}
                             `}
                         >
                             {typeof item.content === "object" ? (
@@ -64,10 +73,12 @@ const ChatArea = () => {
 
             <div ref={bottomRef} />
         </div>
-
         <div className="border-t border-zinc-700 px-6 py-6 bg-zinc-800 text-black flex justify-center">
             <UserForm />
         </div>
+        <button className="new-chat absolute bottom-6 right-10 border border-gray-400 p-2 rounded-lg cursor-pointer hover:border-blue-300 group" onClick={handleNewChat}>
+            <RiChatNewFill size={30} className='group-hover:text-blue-300'/>
+        </button>
     </div>
   )
 }

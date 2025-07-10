@@ -13,8 +13,7 @@ export const POST = async (req: NextRequest) => {
     const session = await auth();
     const { data, itemsData, totalAmount, isInvoiceChanged, isItemsChanged } = await req.json();
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { invoiceId, ...safeData} = data;
+    const {...safeData} = data;
 
     if(data.invoiceId === "" || data.invoiceId === undefined) {
       const id = await getNanoId();

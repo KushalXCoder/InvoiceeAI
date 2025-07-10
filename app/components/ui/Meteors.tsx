@@ -1,7 +1,8 @@
 "use client";
+
 import { cn } from "@/lib/utils/utils";
-import { motion } from "framer-motion"; // corrected: `motion/react` is wrong
-import React from "react";
+import { motion } from "framer-motion";
+import React, { useEffect, useState } from "react";
 
 export const Meteors = ({
   number,
@@ -10,18 +11,27 @@ export const Meteors = ({
   number?: number;
   className?: string;
 }) => {
-  const meteors = new Array(number || 20).fill(true);
+  const [width, setWidth] = useState<number | null>(null);
+
+  useEffect(() => {
+    // Safe to access window here
+    setWidth(window.innerWidth);
+  }, []);
+
+  const meteorCount = number || 20;
+  const meteors = new Array(meteorCount).fill(true);
+
+  if (width === null) return null; // Optional: render nothing on server / first pass
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="fixed inset-0 pointer-events-none z-0" // this makes it cover the whole page
+      className="fixed inset-0 pointer-events-none z-0"
     >
       {meteors.map((_, idx) => {
-        const meteorCount = number || 20;
-        const position = idx * (window.innerWidth / meteorCount); // Spread across full width
+        const position = idx * (width / meteorCount); // Now safe
 
         return (
           <span

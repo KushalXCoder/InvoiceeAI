@@ -11,7 +11,6 @@ export const getNanoId = async () => {
         const id = `INV-${nanoid(6)}`;
         const check = await Invoice.findOne({invoiceId: id});
         if(!check) {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             invoiceId = id;
             isUnique = true;
         }

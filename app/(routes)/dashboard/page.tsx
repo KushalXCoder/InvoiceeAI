@@ -111,8 +111,8 @@ const DashboardPage = async () => {
         ))}
       </div>
       <div className="invoices-table w-full mt-10 bg-white rounded-lg p-5">
-        <div className="top">
-          <h1 className='font-poppins text-3xl'>Recent Invoices</h1>
+        <h1 className='font-poppins text-3xl'>Recent Invoices</h1>
+        <div className="table-container max-lg:max-h-[700px] max-h-[530px] overflow-y-auto">
           <table className="mt-5 table-auto w-full">
             <thead>
               <tr className="bg-gray-100 text-left font-poppins *:text-[14px]">
