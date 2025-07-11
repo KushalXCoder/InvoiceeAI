@@ -31,7 +31,8 @@ const UserForm = () => {
     // Mark the chat state true
     if(!useAiStore.getState().chat) {
         useAiStore.setState({ chat: true});
-        router.push("/dashboard/ai-invoice");
+        // router.push("/dashboard/ai-invoice"); Works locally but not during development
+        router.refresh();
     }
 
     // Get the chatId
