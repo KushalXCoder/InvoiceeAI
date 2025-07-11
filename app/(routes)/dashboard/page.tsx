@@ -76,11 +76,11 @@ const DashboardPage = async () => {
   ];
 
   return (
-    <div className="dashboard-screen h-fit w-full bg-gray-200 p-5">
-      <div className="dashboard-top h-25 w-full bg-white rounded-lg flex justify-between items-center px-12 shadow-lg">
+    <div className="dashboard-screen w-full bg-gray-200 p-5">
+      <div className="dashboard-top h-[15vh] max-lg:h-[10vh] w-full bg-white rounded-lg flex justify-between items-center px-12 max-lg:px-5 shadow-lg">
         <div className="left flex flex-col font-facultyGlyphic">
-          <h1 className='text-3xl font-bold text-blue-500'>Invoice Dashboard</h1>
-          <p>Manage your invoices properly</p>
+          <h1 className='text-3xl max-lg:text-lg font-bold text-blue-500'>Invoice Dashboard</h1>
+          <p className='max-lg:text-[12px]'>Manage your invoices properly</p>
         </div>
         <div className="right">
           {session?.user?.image ? (
@@ -91,7 +91,7 @@ const DashboardPage = async () => {
               width={45}
               priority
               draggable={false}
-              className='rounded-full'
+              className='rounded-full max-lg:h-8 max-lg:w-8'
             />
             ) : <FaUserCircle size={40}/>
           }
@@ -99,12 +99,12 @@ const DashboardPage = async () => {
       </div>
       <div className="invoices-details w-full flex max-lg:flex-wrap max-lg:justify-center gap-10 max-lg:gap-5 mt-8">
         {details.map((item,index) => (
-          <div className="box bg-blue-950 w-1/4 max-lg:w-2/5 flex justify-between items-center text-white rounded-lg p-5" key={index}>
-            <div className="box-left flex flex-col gap-1">
-              <h1 className='font-facultyGlyphic'>{item.name}</h1>
-              <p className='font-bold text-xl font-poppins'>{item.value ?? 0}</p>
+          <div className="box bg-blue-950 w-1/4 max-lg:w-2/5 flex justify-between items-center text-white rounded-lg p-5 max-lg:p-3" key={index}>
+            <div className="box-left flex flex-col gap-1 max-lg:w-full">
+              <h1 className='font-facultyGlyphic max-lg:text-sm'>{item.name}</h1>
+              <p className='font-bold text-xl max-lg:text-sm font-poppins'>{item.value ?? 0}</p>
             </div>
-            <div className="box-right">
+            <div className="box-right max-lg:hidden">
               {item.icon}
             </div>
           </div>
