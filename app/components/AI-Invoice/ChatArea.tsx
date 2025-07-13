@@ -39,8 +39,8 @@ const ChatArea = () => {
                     >
                         <div
                             className={`
-                            px-5 py-3 rounded-xl shadow-md text-sm break-words
-                            ${item.sender === "user" ? "bg-blue-600 text-white rounded-bl-none max-w-[50%]" : "bg-zinc-800 text-gray-100 rounded-br-none max-w-[80%]"}
+                            px-5 py-3 max-lg:px-3 max-lg:py-2 rounded-xl shadow-md text-sm break-words
+                            ${item.sender === "user" ? "bg-blue-600 text-white rounded-bl-none max-w-[50%]" : "bg-zinc-800 text-gray-100 rounded-br-none max-w-[90%]"}
                             `}
                         >
                             {typeof item.content === "object" ? (
@@ -73,10 +73,10 @@ const ChatArea = () => {
 
             <div ref={bottomRef} />
         </div>
-        <div className="border-t border-zinc-700 px-6 py-6 bg-zinc-800 text-black flex justify-center">
+        <div className="border-t border-zinc-700 px-6 py-6 bg-zinc-800 text-black flex justify-center max-lg:justify-start">
             <UserForm />
         </div>
-        <button className="new-chat absolute bottom-6 right-10 border border-gray-400 p-2 rounded-lg cursor-pointer hover:border-blue-300 group" onClick={handleNewChat}>
+        <button className="new-chat absolute bottom-6 right-10 max-lg:right-5 border border-gray-400 p-2 rounded-lg cursor-pointer hover:border-blue-300 group" onClick={handleNewChat}>
             <RiChatNewFill size={30} className='group-hover:text-blue-300'/>
         </button>
     </div>

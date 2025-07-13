@@ -27,21 +27,21 @@ const AiInvoice = () => {
   }
 
   return (
-    <div className='ai-invoice-page h-screen w-full flex justify-center items-center'>
+    <div className='ai-invoice-page min-h-screen w-full flex justify-center items-center'>
         {!chat ? (
-          <div className="container-box flex flex-col items-center">
-            <div className="user-welcome flex flex-col items-center font-poppins text-5xl font-bold mb-10">
+          <div className="container-box flex flex-col justify-center items-center">
+            <div className="user-welcome flex flex-col items-center text-center font-poppins text-5xl max-lg:text-2xl font-bold mb-10">
                 <h1 className="flex items-center gap-2">
                   Welcome to 
                   <span className="text-blue-500 hover:text-blue-700 transition-colors font-facultyGlyphic ml-1">
                     InvoiceeZ
                   </span>
-                  <RiRobot3Fill size={48} className='bg-blue-500 rounded-lg p-1 ms-1 mb-1 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]' color='white'/>
+                  <RiRobot3Fill size={48} className='bg-blue-500 rounded-lg p-1 ms-1 mb-1 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] max-lg:h-7 max-lg:w-7' color='white'/>
                 </h1>
                 <h1>An AI Invoice Generator, here for your help !!!</h1>
             </div>
             <UserForm/>
-            <div className="user-info-box font-poppins p-3 border-2 rounded-lg border-red-500 w-4/6 mt-10 text-center absolute bottom-8">
+            <div className="user-info-box font-poppins p-3 border-2 rounded-lg border-red-500 w-3/6 max-lg:w-5/6 mt-10 text-center max-lg:text-sm">
               <p>InvoiceeZ is an AI to make your life easy, by making invoice generation easier instead of just entering data manually. We try to make the AI as better as possible, to make the results more good. If, you are not satisfied with results, I am so sorry for it.</p>
             </div>
           </div>
