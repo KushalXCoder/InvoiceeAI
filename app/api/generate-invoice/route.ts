@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
 import connectDb from "@/lib/helper/connectDb";
 import { getNanoId } from "@/lib/helper/nanoId";
+import { cookies } from "next/headers";
+import verifyToken from "@/lib/helper/verifyToken";
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -11,6 +13,11 @@ export const POST = async (req: NextRequest) => {
 
     // Get session and data
     const session = await auth();
+
+    // Get email from cookie
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token")?.value;
+    const payload = (await verifyToken(token ?? "")).payload;
     const { data, itemsData, totalAmount, isInvoiceChanged, isItemsChanged } = await req.json();
 
     const {...safeData} = data;
@@ -22,7 +29,7 @@ export const POST = async (req: NextRequest) => {
           invoiceId: id,
           ...safeData,
         },
-        user: session?.user?.email,
+        user: session?.user?.email || payload?.email,
         itemsData,
         finalAmount: totalAmount,
       });

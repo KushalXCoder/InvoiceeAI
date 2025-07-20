@@ -5,6 +5,7 @@ import verifyToken from "./lib/helper/verifyToken";
 
 export const middleware = async(req: NextRequest) => {
     const session = await auth();
+
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
 
@@ -15,7 +16,10 @@ export const middleware = async(req: NextRequest) => {
 
     else if(token) {
         const decoded = await verifyToken(token);
-        if(!decoded) {
+        if(decoded.expired) {
+            return NextResponse.redirect(new URL ("/login", req.url));
+        }
+        else if(!decoded.valid) {
             return NextResponse.redirect(new URL ("/register", req.url));
         }
     }
@@ -23,5 +27,5 @@ export const middleware = async(req: NextRequest) => {
 }
 
 export const config = {
-    matcher: ["/dashboard/invoice"],
+    matcher: ["/dashboard/:path*",],
 }

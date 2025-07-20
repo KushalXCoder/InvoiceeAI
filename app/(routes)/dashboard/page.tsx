@@ -9,6 +9,8 @@ import { FaExclamationCircle } from "react-icons/fa";
 import dayjs from 'dayjs';
 import DashboardActions from '@/app/components/Dashboard/DashboardActions';
 import { calculateValue } from '@/lib/helper/calculateValue';
+import { cookies } from 'next/headers';
+import verifyToken from '@/lib/helper/verifyToken';
 
 type ItemsData = {
     itemsDescription: string,
@@ -48,7 +50,15 @@ type dataType = {
 }
 
 const DashboardPage = async () => {
+  // Get email fro session
   const session = await auth();
+
+  // --------------- or ------------------
+
+  // Get email from cookie
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+  const payload = (await verifyToken(token ?? "")).payload;
 
   // Defining data, so that it can be used below
   let data;
@@ -57,7 +67,7 @@ const DashboardPage = async () => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_URI}/api/get-data`, {
       method: "POST",
-      body: JSON.stringify({email: session?.user?.email}),
+      body: JSON.stringify({email: session?.user?.email || payload?.email}),
       cache:"no-cache",
       credentials: "include",
     });
