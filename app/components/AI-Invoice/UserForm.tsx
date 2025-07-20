@@ -129,14 +129,14 @@ const UserForm = () => {
   return (
     <>
     <form onSubmit={handleSubmit} className={`user-input w-3/5 max-lg:w-5/6 border rounded-lg flex items-center px-3 bg-white gap-3`}>
-        <Image src="/Logo1.svg" alt='Logo Image' height={35} width={35} priority draggable={false}/>
+        <Image src="/Logo1.svg" alt='Logo Image' height={35} width={35} priority draggable={false} className='max-lg:h-5'/>
         <input type="text" value={userInput} onChange={(e) => setUserInput(e.target.value)} className='outline-0 py-3 font-poppins w-full max-lg:text-sm' placeholder='Generate me an invoice for 5 T-Shirts of rupees 299 each' required/>
         <button type='submit'>
             <BiSolidSend size={25} className='hover:text-blue-700 transition-colors'/>
         </button>
     </form>
     {notice && (
-        <div className="notice absolute top-5 right-5 max-lg:right-2 max-lg:left-2 max-lg:top-2 h-fit w-fit px-4 py-3 border-2 border-red-500 rounded-lg max-lg:text-sm bg-white flex flex-col gap-2 shadow-xl">
+        <div className="notice absolute top-5 right-5 max-lg:right-2 max-lg:left-2 max-lg:top-2 h-fit max-w-full px-4 py-3 border-2 border-red-500 rounded-lg max-lg:text-sm bg-white flex flex-col gap-2 shadow-xl">
             <div className="top flex justify-between items-center gap-3 font-facultyGlyphic">
                 <div className='flex items-center gap-3'>
                     <Image src="/Logo1.svg" alt='Logo Image' height={30} width={30} priority draggable={false}/>

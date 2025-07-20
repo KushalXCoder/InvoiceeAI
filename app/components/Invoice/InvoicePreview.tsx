@@ -22,7 +22,7 @@ const InvoicePreview = () => {
   const details = { ...source };
 
   return (
-    <div className="invoice-preview max-lg:w-full w-4/6 px-10 pt-8 max-lg:px-2 max-lg:pt-2 overflow-y-scroll">
+    <div className="invoice-preview max-lg:w-full w-4/6 px-10 pt-8 max-lg:px-2 max-lg:pt-2 overflow-y-auto h-full">
       <div className="document w-full h-fit bg-[#ffffff] rounded-lg px-8 py-10 max-lg:px-2 max-lg:py-2 mb-5 border">
         <div className="top-section flex justify-between gap-2 w-full">
           <div className="company-details flex flex-col gap-2 w-2/4 max-lg:w-2/5 flex-wrap">
@@ -189,7 +189,7 @@ const InvoicePreview = () => {
           </div>
         </div>
       </div>
-      <div className="user-note font-facultyGlyphic border border-red-500 rounded-lg p-3 mb-5">
+      <div className="user-note font-facultyGlyphic border border-red-500 rounded-lg p-3 mb-20">
         <h1 className="font-bold">Important</h1>
         <p className="mt-1">
           The above preview just helps in visualizing how the details would be
