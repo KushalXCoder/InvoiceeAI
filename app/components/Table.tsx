@@ -64,29 +64,29 @@ const Table = () => {
         <tbody>
             {source.map((item, rowIndex) => (
             <>
-            <tr key={rowIndex} className='w-full'>
-                {tableConfig.map((col, colIndex) => (
-                <td key={colIndex} className={`pe-1 py-1 ${col.width}`}>
-                    <input
-                    type={col.key === 'itemsDescription' ? `text` : `number`}
-                    value={item[col.key as keyof ItemsData] ?? ""}
-                    onChange={(e) => handleChange(e, rowIndex)}
-                    name={col.key}
-                    className="w-full border border-[#d1d5db] rounded-md text-sm outline-none px-2 py-1 capitalize"
-                    />
-                </td>
-                ))}
-                <td className="w-[40px]">
-                {rowIndex !== 0 && (
-                    <button
-                      className="w-full h-full flex items-center justify-center text-[#6b7280] transition-colors"
-                      onClick={() => handleRemove(rowIndex)}
-                    >
-                      <RxCross2 size={18} />
-                    </button>
-                )}
-                </td>
-            </tr>
+              <tr key={rowIndex} className='w-full'>
+                  {tableConfig.map((col, colIndex) => (
+                  <td key={colIndex} className={`pe-1 py-1 ${col.width}`}>
+                      <input
+                      type={col.key === 'itemsDescription' ? `text` : `number`}
+                      value={item[col.key as keyof ItemsData] ?? ""}
+                      onChange={(e) => handleChange(e, rowIndex)}
+                      name={col.key}
+                      className="w-full border border-[#d1d5db] rounded-md text-sm outline-none px-2 py-1 capitalize"
+                      />
+                  </td>
+                  ))}
+                  <td className="w-[40px]">
+                  {rowIndex !== 0 && (
+                      <button
+                        className="w-full h-full flex items-center justify-center text-[#6b7280] transition-colors"
+                        onClick={() => handleRemove(rowIndex)}
+                      >
+                        <RxCross2 size={18} />
+                      </button>
+                  )}
+                  </td>
+              </tr>
             </>
             ))}
         </tbody>

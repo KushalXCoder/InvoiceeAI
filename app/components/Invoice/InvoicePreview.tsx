@@ -24,8 +24,8 @@ const InvoicePreview = () => {
   return (
     <div className="invoice-preview max-lg:w-full w-4/6 px-10 pt-8 max-lg:px-2 max-lg:pt-2 overflow-y-scroll">
       <div className="document w-full h-fit bg-[#ffffff] rounded-lg px-8 py-10 max-lg:px-2 max-lg:py-2 mb-5 border">
-        <div className="top-section flex justify-between gap-2">
-          <div className="company-details flex flex-col gap-2">
+        <div className="top-section flex justify-between gap-2 w-full">
+          <div className="company-details flex flex-col gap-2 w-2/4 max-lg:w-2/5 flex-wrap">
             {data.logo && (
               <img
                 src={URL.createObjectURL(data.logo)}
@@ -43,7 +43,7 @@ const InvoicePreview = () => {
               <p>{details.address3}</p>
             </div>
           </div>
-          <div className="invoice-details font-poppins flex flex-col gap-2 items-end text-[#374151]">
+          <div className="invoice-details font-poppins flex flex-col gap-2 items-end text-[#374151] w-2/4">
             <h1 className="text-4xl max-lg:text-xl font-bold text-[#000000]">
               INVOICE
             </h1>
@@ -69,16 +69,16 @@ const InvoicePreview = () => {
         </div>
         <div className="bill-to-details font-poppins mt-5 flex flex-col">
           <h1 className="text-[#4b5563] text-xl max-lg:text-[16px]">Bill To</h1>
-          <h1 className="text-[19px] max-lg:text-[12px] mt-2">
+          <h1 className="text-[19px] max-lg:text-[14px] mt-2">
             {details.billToName}
           </h1>
-          <div className="flex flex-col mt-2 *:text-[#6b7280]">
+          <div className="flex flex-col mt-2 *:text-[#6b7280] max-lg:text-[14px]">
             <p>{details.billToAddress1}</p>
             <p>{details.billToAddress2}</p>
             <p>{details.billToAddress3}</p>
           </div>
         </div>
-        <div className="items-entries mt-10 overflow-x-scroll">
+        <div className="items-entries mt-10 overflow-x-auto">
           <Table />
         </div>
         <div className="w-full flex max-lg:flex-col justify-between max-lg:items-end mt-8">

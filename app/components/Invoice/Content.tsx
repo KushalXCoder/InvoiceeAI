@@ -4,7 +4,7 @@ import InvoiceInput from './InvoiceInput'
 
 const Content = () => {
   return (
-        <main className='row-start-2 col-start-2 dashboard-content ms-1 flex overflow-hidden'>
+        <main className='row-start-2 col-start-2 dashboard-content flex overflow-hidden'>
           <InvoicePreview/>
           <InvoiceInput screen=""/>
         </main>

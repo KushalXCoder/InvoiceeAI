@@ -15,7 +15,7 @@ const NavbarBurger = () => {
       <RxHamburgerMenu size={22} onClick={() => setOpen(true)} />
       <AnimatePresence>
         {open && (
-          <div className="screen-container w-screen backdrop-blur-lg flex justify-end absolute top-0 right-0 z-10">
+          <div className="screen-container w-screen backdrop-blur-lg flex justify-end fixed top-0 right-0 z-10">
             <motion.div
               initial={{ x: "100%", opacity: 0 }}
               animate={{

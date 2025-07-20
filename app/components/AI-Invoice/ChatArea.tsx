@@ -73,12 +73,12 @@ const ChatArea = () => {
 
             <div ref={bottomRef} />
         </div>
-        <div className="border-t border-zinc-700 px-6 py-6 bg-zinc-800 text-black flex justify-center max-lg:justify-start">
+        <div className="border-t border-zinc-700 px-2 py-4 bg-zinc-800 text-black flex justify-center max-lg:justify-start gap-2 max-lg:mb-15">
             <UserForm />
+            <button className="new-chat w-fit border border-gray-400 p-2 rounded-lg cursor-pointer hover:border-blue-300 group" onClick={handleNewChat}>
+                <RiChatNewFill size={30} className='text-white group-hover:text-blue-300'/>
+            </button>
         </div>
-        <button className="new-chat absolute bottom-6 right-10 max-lg:right-5 border border-gray-400 p-2 rounded-lg cursor-pointer hover:border-blue-300 group" onClick={handleNewChat}>
-            <RiChatNewFill size={30} className='group-hover:text-blue-300'/>
-        </button>
     </div>
   )
 }

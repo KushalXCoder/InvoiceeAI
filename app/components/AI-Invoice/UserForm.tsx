@@ -136,13 +136,13 @@ const UserForm = () => {
         </button>
     </form>
     {notice && (
-        <div className="notice absolute top-5 right-5 h-fit w-[380px] px-4 py-3 border-2 border-red-500 rounded-lg bg-white flex flex-col gap-2 shadow-xl">
+        <div className="notice absolute top-5 right-5 max-lg:right-2 max-lg:left-2 max-lg:top-2 h-fit w-fit px-4 py-3 border-2 border-red-500 rounded-lg max-lg:text-sm bg-white flex flex-col gap-2 shadow-xl">
             <div className="top flex justify-between items-center gap-3 font-facultyGlyphic">
                 <div className='flex items-center gap-3'>
                     <Image src="/Logo1.svg" alt='Logo Image' height={30} width={30} priority draggable={false}/>
-                    <h1 className='text-blue-500 text-xl font-bold'>InvoiceeZ</h1>
+                    <h1 className='text-blue-500 text-xl max-lg:text-lg font-bold'>InvoiceeZ</h1>
                 </div>
-                <RxCross2 size={22} onClick={() => setNotice(false)}/>
+                <RxCross2 size={22} className='max-lg:h-5 max-lg:w-5' onClick={() => setNotice(false)}/>
             </div>
             <p className='font-poppins'>Please make sure, you have saved your invoice, you are working on, as using me, would overwrite it.</p>
         </div>
