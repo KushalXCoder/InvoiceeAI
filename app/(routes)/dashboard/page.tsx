@@ -86,7 +86,7 @@ const DashboardPage = async () => {
   ];
 
   return (
-    <div className="dashboard-screen w-full bg-gray-200 p-5">
+    <div className="dashboard-screen col-start-2 row-span-2 w-full bg-gray-200 p-5 overflow-y-auto">
       <div className="dashboard-top h-[15vh] max-lg:h-[10vh] w-full bg-white rounded-lg flex justify-between items-center px-12 max-lg:px-5 shadow-lg">
         <div className="left flex flex-col font-facultyGlyphic">
           <h1 className='text-3xl max-lg:text-lg font-bold text-blue-500'>Invoice Dashboard</h1>
@@ -122,7 +122,7 @@ const DashboardPage = async () => {
       </div>
       <div className="invoices-table w-full mt-10 bg-white rounded-lg p-5">
         <h1 className='font-poppins text-3xl'>Recent Invoices</h1>
-        <div className="table-container max-lg:max-h-[700px] max-h-[530px] overflow-y-auto">
+        <div className="table-container">
           <table className="mt-5 table-auto w-full">
             <thead>
               <tr className="bg-gray-100 text-left font-poppins *:text-[14px]">
