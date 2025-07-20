@@ -43,14 +43,14 @@ const Form = ({type} : {type: string}) => {
   }  
 
   return (
-    <form onSubmit={handleSubmit} className='w-4/5 flex flex-col gap-5'>
+    <form onSubmit={handleSubmit} className='w-4/5 max-sm:w-5/6 flex flex-col gap-5'>
         <div className="email font-poppins flex flex-col gap-2">
-            <label htmlFor="email" className='text-gray-500 text-[16px]'>Email address</label>
-            <input type='email' name='email' value={userData.email} placeholder='johndoe@gmail.com' onChange={(e) => handleChange(e)} className='border w-full rounded-lg px-2 py-2 font-facultyGlyphic text-[15px] shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus:outline-0' required/>
+            <label htmlFor="email" className='text-gray-500 text-[16px] max-sm:text-[14px]'>Email address</label>
+            <input type='email' name='email' value={userData.email} placeholder='johndoe@gmail.com' onChange={(e) => handleChange(e)} className='border w-full rounded-lg px-2 py-2 font-facultyGlyphic text-[15px] max-sm:text-[12px] shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus:outline-0' required/>
         </div>
         <div className="passowrd font-poppins flex flex-col gap-2">
-            <label htmlFor="password" className='text-gray-500 text-[16px]'>Password</label>
-            <input type='password' name='password' value={userData.password} placeholder='********' onChange={(e) => handleChange(e)} className='border w-full rounded-lg px-2 py-2 font-facultyGlyphic text-[15px] shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus:outline-0' required autoComplete="current-password"/>
+            <label htmlFor="password" className='text-gray-500 text-[16px] max-sm:text-[14px]'>Password</label>
+            <input type='password' name='password' value={userData.password} placeholder='********' onChange={(e) => handleChange(e)} className='border w-full rounded-lg px-2 py-2 font-facultyGlyphic text-[15px] max-sm:text-[12px] shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus:outline-0' required autoComplete="current-password"/>
         </div>
         <div className="button flex justify-center font-poppins">
             <button type='submit' className='flex justify-center items-center gap-3 border w-3/4 rounded-lg py-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] cursor-pointer'>

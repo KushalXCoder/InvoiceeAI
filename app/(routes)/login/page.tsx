@@ -6,11 +6,11 @@ import React from 'react';
 const SignInPage = () => {
 
   return (
-    <div className="sign-in-page h-screen w-screen flex justify-center items-center bg-blue-950 relative">
-        <div className="sign-in-box h-2/3 md:w-2/4 lg:w-1/4 rounded-lg shadow-2xl backdrop-blur-2xl flex flex-col items-center px-5 py-5 gap-5 bg-white mt-10 absolute">
+    <div className="sign-in-page h-screen w-screen flex justify-center items-center bg-blue-950 max-lg:p-5">
+        <div className="sign-in-box h-fit w-fit rounded-lg shadow-2xl flex flex-col items-center px-5 py-5 gap-5 bg-white max-sm:px-2">
             <div className="heading flex flex-col items-center">
                 <h1 className='font-facultyGlyphic text-lg'>Log In to InvoiceeAI</h1>
-                <p className='text-gray-500 font-poppins text-sm text-center'>Welcome again, hope you are enjoing. Fill details to continue</p>
+                <p className='text-gray-500 font-poppins text-sm text-center w-3/4 max-sm:w-full max-sm:mt-2'>Welcome again, hope you are enjoing. Fill details to continue</p>
             </div>
             <GoogleButton/>
             <div className="or flex justify-center items-center w-full gap-4">
@@ -19,7 +19,7 @@ const SignInPage = () => {
                 <div className="line h-[1px] w-1/3 bg-black"></div>
             </div>
             <Form type="Login"/>
-            <p className='font-facultyGlyphic'>Dont have an account ? 
+            <p className='font-facultyGlyphic max-sm:text-[15px]'>Dont have an account ? 
                 <Link href="/register" className='underline hover:text-blue-600 transition-colors'> Sign Up </Link>
             </p>
             <p className='font-facultyGlyphic border px-5 py-1 bg-blue-950 text-white rounded-lg'>Powered by InvoiceeAI</p>
