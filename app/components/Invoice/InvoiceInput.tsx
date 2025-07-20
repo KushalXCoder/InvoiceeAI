@@ -72,7 +72,7 @@ const InvoiceInput = ({ screen }: { screen: string }) => {
             <input
               type="date"
               name="orderDate"
-              value={dayjs(source.orderDate).format("DD-MM-YYYY") ?? ""}
+              value={dayjs(source.orderDate).format("YYYY-MM-DD") ?? ""}
               className="border p-2 w-full"
               onChange={handleChange}
             />
@@ -82,7 +82,7 @@ const InvoiceInput = ({ screen }: { screen: string }) => {
             <input
               type="date"
               name="dueDate"
-              value={dayjs(source.dueDate).format("DD-MM-YYYY") ?? ""}
+              value={dayjs(source.dueDate).format("YYYY-MM-DD") ?? ""}
               className="border p-2 w-full"
               onChange={handleChange}
             />
