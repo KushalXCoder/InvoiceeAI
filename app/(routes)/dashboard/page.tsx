@@ -50,15 +50,22 @@ type dataType = {
 }
 
 const DashboardPage = async () => {
+  // Defining email, cause to get email either from session or from token, and store it as variable used inside an if cant be used outside it
+  let email;
+
   // Get email fro session
   const session = await auth();
+  email = session?.user?.email;
 
   // --------------- or ------------------
 
   // Get email from cookie
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
-  const payload = (await verifyToken(token ?? "")).payload;
+  if(token) {
+    const payload = (await verifyToken(token ?? "")).payload;
+    email = payload?.email;
+  }
 
   // Defining data, so that it can be used below
   let data;
@@ -67,7 +74,7 @@ const DashboardPage = async () => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_URI}/api/get-data`, {
       method: "POST",
-      body: JSON.stringify({email: session?.user?.email || payload?.email}),
+      body: JSON.stringify({email: email}),
       cache:"no-cache",
       credentials: "include",
     });

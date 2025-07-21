@@ -36,9 +36,12 @@ const InvoiceDownload = () => {
     }
 
     const ans = await res.json();
+    console.log(data.invoiceId);
     if(data.invoiceId === "") {
       setField("invoiceId",ans.invoice.invoiceInfo.invoiceId);
+      console.log(ans.invoice.invoiceInfo.invoiceId);
       setInvoiceId(ans.invoice.invoiceInfo.invoiceId);
+      console.log(useInvoiceStore.getState().currentInvoiceId);
     }
   };
 

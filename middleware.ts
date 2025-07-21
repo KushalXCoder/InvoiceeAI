@@ -14,7 +14,11 @@ export const middleware = async(req: NextRequest) => {
         return NextResponse.redirect(new URL("/register", req.url));
     }
 
-    else if(token) {
+    if(session?.user) {
+        return NextResponse.next();
+    }
+
+    if(token) {
         const decoded = await verifyToken(token);
         if(decoded.expired) {
             return NextResponse.redirect(new URL ("/login", req.url));

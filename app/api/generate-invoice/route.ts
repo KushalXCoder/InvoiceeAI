@@ -11,25 +11,34 @@ export const POST = async (req: NextRequest) => {
     // Connect to db
     await connectDb();
 
+    // email variable
+    let email;
+
     // Get session and data
     const session = await auth();
+    email = session?.user?.email;
 
     // Get email from cookie
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
-    const payload = (await verifyToken(token ?? "")).payload;
+    if(token) {
+      const payload = (await verifyToken(token ?? "")).payload;
+      email = payload?.email;
+    }
+
     const { data, itemsData, totalAmount, isInvoiceChanged, isItemsChanged } = await req.json();
 
     const {...safeData} = data;
 
-    if(data.invoiceId === "" || data.invoiceId === undefined) {
+    if(data.invoiceId === "" || data.invoiceId === undefined || data.invoiceId === null) {
       const id = await getNanoId();
+      console.log(id);
       const invoice = await Invoice.create({
         invoiceInfo: {
           invoiceId: id,
           ...safeData,
         },
-        user: session?.user?.email || payload?.email,
+        user: email,
         itemsData,
         finalAmount: totalAmount,
       });
