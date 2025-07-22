@@ -189,12 +189,12 @@
             </div>
           </div>
         </div>
-        <div className="user-note font-facultyGlyphic border border-red-500 rounded-lg p-3 mb-20">
+        <div className="user-note font-facultyGlyphic border border-red-500 rounded-lg p-3 mb-5 max-sm:mb-20">
           <h1 className="font-bold">Important</h1>
           <p className="mt-1">
             The above preview just helps in visualizing how the details would be
             in the invoice, this is not the final invoice. The final invoice
-            epends on tempelate you choose on clicking download.
+            depends on tempelate you choose on clicking download.
           </p>
         </div>
       </div>

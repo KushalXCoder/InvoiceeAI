@@ -82,7 +82,7 @@ const Table = () => {
                         className="w-full h-full flex items-center justify-center text-[#6b7280] transition-colors"
                         onClick={() => handleRemove(rowIndex)}
                       >
-                        <RxCross2 size={18} />
+                        <RxCross2 size={18} className='hover:text-red-500'/>
                       </button>
                   )}
                   </td>
