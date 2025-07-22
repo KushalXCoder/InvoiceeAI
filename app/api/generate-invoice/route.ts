@@ -28,15 +28,15 @@ export const POST = async (req: NextRequest) => {
 
     const { data, itemsData, totalAmount, isInvoiceChanged, isItemsChanged } = await req.json();
 
-    const {...safeData} = data;
+    const { ...safeData } = data;
 
     if(data.invoiceId === "" || data.invoiceId === undefined || data.invoiceId === null) {
       const id = await getNanoId();
       console.log(id);
       const invoice = await Invoice.create({
         invoiceInfo: {
-          invoiceId: id,
           ...safeData,
+          invoiceId: id,
         },
         user: email,
         itemsData,

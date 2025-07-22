@@ -83,8 +83,6 @@ const DashboardPage = async () => {
     console.error("Error fetching data", error);
   }
 
-  console.log(data.invoices);
-
   const details = [
     {name: "Total Invoices", value: data.invoices.length, icon: <SiGoogledocs size={28} color='blue'/>},
     {name: "Recieved", value: calculateValue(data.invoices,"recieved"), icon: <SiTicktick size={28} color="green"/>},

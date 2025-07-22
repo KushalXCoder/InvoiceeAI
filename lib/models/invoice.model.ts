@@ -4,6 +4,7 @@ const InvoiceSchema = new mongoose.Schema({
     invoiceInfo: {
         invoiceId: {
             type: String,
+            required: true,
         },
         invoiceNumber: {
             type: String,
