@@ -11,7 +11,7 @@ const Navbar = async () => {
     {name: "Home", redirectTo: "/"},
     {name: "Dashboard", redirectTo: "/dashboard"},
     {name: "Features", redirectTo: "#features"},
-    {name: "Contact", redirectTo: "/"},
+    // {name: "Contact", redirectTo: "/"},
   ];
 
   const session = await auth();
@@ -19,11 +19,11 @@ const Navbar = async () => {
   const token = cookieStore.get("token")?.name;
 
   return (
-    <nav className='w-screen h-14 absolute top-0 py-10 px-16 max-lg:px-5 flex items-center justify-between font-facultyGlyphic bg-white z-10'>
+    <nav className='w-screen h-14 absolute top-0 py-10 px-16 max-lg:px-5 flex items-center justify-between font-facultyGlyphic z-10 backdrop-blur-xs'>
         <Link href="/">
             <Image src="/Logo.svg" alt='InvoiceeAI' height={100} width={100} priority draggable={false} className='h-auto max-lg:w-40 w-60'/>
         </Link>
-        <ul className="nav-options flex gap-10 max-lg:hidden">
+        <ul className="nav-options absolute left-1/2 transform -translate-x-1/2 flex gap-10 max-lg:hidden text-lg">
             {navLinks.map((item,index) => (
                 <Link key={index} href={item.redirectTo} className='relative'>{item.name}</Link>
             ))}

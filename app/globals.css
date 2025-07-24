@@ -64,3 +64,8 @@ body {
 .invoice-preview, .invoice-details, .chat-area, .table-container {
   scrollbar-width: none;
 }
+
+.bg-grid {
+  background-image: url('/grid.jpg');
+  background-position: center;
+}
