@@ -19,7 +19,7 @@ const Navbar = async () => {
   const token = cookieStore.get("token")?.name;
 
   return (
-    <nav className='w-screen h-14 absolute top-0 py-10 px-16 max-lg:px-5 flex items-center justify-between font-facultyGlyphic z-10 backdrop-blur-xs'>
+    <nav className='relative w-screen h-14 py-10 px-16 max-lg:px-5 flex items-center justify-between font-facultyGlyphic z-10 backdrop-blur-xs'>
         <Link href="/">
             <Image src="/Logo.svg" alt='InvoiceeAI' height={100} width={100} priority draggable={false} className='h-auto max-lg:w-40 w-60'/>
         </Link>

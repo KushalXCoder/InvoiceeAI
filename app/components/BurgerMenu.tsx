@@ -1,7 +1,7 @@
 "use client";
 
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RxCross2 } from "react-icons/rx";
 import { usePathname } from 'next/navigation';
@@ -23,6 +23,15 @@ const BurgerMenu = ({session, token}: Props) => {
     {name: "Contact", redirectTo: "/"},
   ];
   const pathname = usePathname();
+
+  useEffect(() => {
+    if(open) {
+        document.body.style.overflow = "hidden";
+    }
+    else {
+        document.body.style.overflow = "scroll";
+    }
+  }, [open]);
 
   return (
     <div className="burger-menu max-lg:block hidden">
