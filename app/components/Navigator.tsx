@@ -1,9 +1,12 @@
+"use client";
+
 import React from 'react';
 import { IoHomeOutline } from "react-icons/io5";
 import { TbFileInvoice } from "react-icons/tb";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { RiRobot3Fill } from "react-icons/ri";
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const Navigator = () => {
   const sidebarLinks = [
@@ -12,12 +15,15 @@ const Navigator = () => {
     {name: "Dashboard", icon: <IoDocumentTextOutline className='h-6 w-6'/>, redirectTo: "/dashboard"},
     {name: "AI Invoice", icon: <RiRobot3Fill className='h-6 w-6'/>, redirectTo: "/dashboard/ai-invoice"},
   ];
+
+  const path = usePathname();
+
   return (
     <nav className='mobile-sidebar max-lg:flex max-lg:justify-around hidden w-screen bg-blue-100 fixed bottom-0 border-t px-4 py-2'>
         {sidebarLinks.map((item,index) => (
             <Link key={index} href={item.redirectTo} className='flex flex-col items-center'>
                 {item.icon}
-                <p className='font-facultyGlyphic text-[12px]'>{item.name}</p>
+                <p className={`font-facultyGlyphic text-[12px] ${path === item.redirectTo ? `underline text-blue-700 font-bold` : ``}`}>{item.name}</p>
             </Link>
         ))}
     </nav>

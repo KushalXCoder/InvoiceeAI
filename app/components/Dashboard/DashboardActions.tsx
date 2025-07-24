@@ -253,12 +253,12 @@ const DashboardActions = ({id} : {id : string}) => {
         </motion.div>
       )}
       {sendMail && (
-        <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: {duration: 0.7, ease: "easeIn"}}} className="send-email-box h-fit w-[600px] p-5 bg-white flex flex-col rounded-lg absolute top-10 left-[38%] backdrop-blur-lg font-poppins border">
+        <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: {duration: 0.7, ease: "easeIn"}}} className="send-email-box h-fit w-[600px] max-sm:w-fit p-5 max-sm:py-3 bg-white flex flex-col rounded-lg absolute top-10 left-[38%] max-sm:top-5 max-sm:left-3 max-sm:right-3 backdrop-blur-lg font-poppins border z-50">
           <h1 className='font-facultyGlyphic font-bold text-blue-500 text-xl'>InvoiceeAI</h1>
-          <p className='mt-2 text-gray-700'>Whom you want to send this email to ? Enter one email at a time</p>
+          <p className='mt-2 text-gray-700 max-sm:text-sm'>Whom you want to send this email to ? Enter one email at a time</p>
           <form onSubmit={handleMailSubmit}>
-            <input type="email" value={mailFormData.mail ?? ""} placeholder='Enter email here' onChange={(e) => setMailFormData({mail: e.target.value})} className='px-4 py-2 outline-0 rounded-lg w-full border mt-2' required/>
-            <div className="button-group flex mt-5 gap-3 items-center">
+            <input type="email" value={mailFormData.mail ?? ""} placeholder='Enter email here' onChange={(e) => setMailFormData({mail: e.target.value})} className='px-4 py-2 outline-0 rounded-lg w-full border mt-2 max-sm:text-sm' required/>
+            <div className="button-group flex mt-5 gap-3 items-center *:max-sm:text-sm max-sm:mt-3">
               <button type='submit' className='bg-blue-500 hover:bg-blue-600 rounded-lg w-1/4 px-4 py-2 text-white'>Send</button>
               <button onClick={() => setSendMail(false)} className='border rounded-lg text-black px-4 py-2'>Cancel</button>
               {sending && (
