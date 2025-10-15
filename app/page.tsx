@@ -11,6 +11,7 @@ import {
   X,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { AppLogo } from "@/components/logo";
 
 export default function InvoiceLanding() {
   const router = useRouter();
@@ -23,17 +24,7 @@ export default function InvoiceLanding() {
         {/* Invoice Header - Grid Layout */}
         <div className="grid grid-cols-[auto_1fr_auto] border-b border-gray-400">
           {/* Logo Section */}
-          <div className="px-6 py-4 border-r border-gray-400 flex items-center gap-3">
-            <div className="w-12 h-12 bg-gray-900 flex items-center justify-center">
-              <FileText className="w-7 h-7 text-white" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 font-facultyGlyphic">
-                InvoiceeAI
-              </h1>
-              <p className="text-sm text-gray-500">Smart Invoicing</p>
-            </div>
-          </div>
+          <AppLogo />
 
           {/* Invoice Number */}
           <div className="p-6 border-r border-gray-400 flex justify-center items-center">
