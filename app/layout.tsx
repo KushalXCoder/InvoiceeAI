@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
-import { Poppins, Faculty_Glyphic, Rubik_Doodle_Shadow } from "next/font/google";
+import {
+  Poppins,
+  Faculty_Glyphic,
+  Rubik_Doodle_Shadow,
+} from "next/font/google";
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -22,7 +27,8 @@ const rubikDoodleShadow = Rubik_Doodle_Shadow({
 
 export const metadata: Metadata = {
   title: "InvoiceeAI",
-  description: "An AI based Invoicee generator that helps in generating invoice manually or using AI",
+  description:
+    "An AI based Invoicee generator that helps in generating invoice manually or using AI",
 };
 
 export default function RootLayout({
@@ -32,8 +38,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} ${facultyGlyphic.variable} ${rubikDoodleShadow.variable} font-sans antialiased overflow-x-hidden`}>
+      <body
+        className={`${poppins.variable} ${facultyGlyphic.variable} ${rubikDoodleShadow.variable} font-sans antialiased overflow-x-hidden`}
+      >
         {children}
+        <Toaster />
       </body>
     </html>
   );
