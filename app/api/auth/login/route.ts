@@ -8,20 +8,21 @@ import connectDb from "@/lib/helper/connectDb";
 export const POST = async(req: NextRequest) => {
     try {
         await connectDb();
+        
         const { email, password } = await req.json();
 
-        const checkUser = await User.findOne({email: email});
-        if(!checkUser) {
+        const checkUser = await User.findOne({ email: email });
+        if (!checkUser) {
             return NextResponse.redirect(new URL("/register", req.url));
         }
 
         const checkPassword = await bcrypt.compare(password, checkUser.password);
-        if(!checkPassword) {
+        if (!checkPassword) {
             console.log("Incorrect Password");
-            return NextResponse.json({message: "Incorrect Password"}, {status: 400});
+            return NextResponse.json({ message: "Incorrect Password" }, { status: 400 });
         }
 
-        const token = jwt.sign({email},`${process.env.JWT_SECRET}`, {expiresIn: '1h'});
+        const token = jwt.sign({ email }, `${process.env.JWT_SECRET}`, { expiresIn: '1h' });
 
         const cookieStore = await cookies();
         cookieStore.set({

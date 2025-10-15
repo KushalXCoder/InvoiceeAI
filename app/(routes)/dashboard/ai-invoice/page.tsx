@@ -1,7 +1,7 @@
 "use client";
 
-import ChatArea from '@/app/components/AI-Invoice/ChatArea';
-import UserForm from '@/app/components/AI-Invoice/UserForm';
+import ChatArea from '@/components/AI-Invoice/ChatArea';
+import UserForm from '@/components/AI-Invoice/UserForm';
 import { useAiStore } from '@/store/aiStore';
 import React from 'react';
 import { RiRobot3Fill } from "react-icons/ri";

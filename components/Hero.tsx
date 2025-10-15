@@ -5,8 +5,9 @@ import { FaArrowRightLong } from "react-icons/fa6";
 
 const Hero = () => {
   return (
-    <div className="w-full pt-25 max-lg:pt-13 flex flex-col items-center">
-      <div className="bg-grid fixed top-0 left-0 w-full h-full z-[-1]"></div>
+    <div 
+      className="w-full pt-25 max-lg:pt-13 flex flex-col items-center"
+    >
       <div className="slogan-outer border border-blue-200 rounded-4xl p-1.5 mt-10 mb-5">
         <div className="slogan-inner border border-blue-400 rounded-4xl p-1.5">
           <div className="slogan font-facultyGlyphic border rounded-4xl w-fit px-5 py-1 border-blue-700 text-gray-700 max-lg:text-[14px]">

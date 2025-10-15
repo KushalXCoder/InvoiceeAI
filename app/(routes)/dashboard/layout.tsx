@@ -1,5 +1,5 @@
-import Sidebar from "@/app/components/Invoice/Sidebar";
-import Navigator from "@/app/components/Navigator";
+import Sidebar from "@/components/Invoice/Sidebar";
+import Navigator from "@/components/Navigator";
 import { ReactNode } from "react";
 
 export default function DashboardLayout({ children } : Readonly<{ children: ReactNode; }>) {

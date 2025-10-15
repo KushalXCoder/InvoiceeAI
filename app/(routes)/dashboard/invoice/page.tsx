@@ -1,5 +1,5 @@
-import Content from '@/app/components/Invoice/Content';
-import DashboardNavbar from '@/app/components/Invoice/DashboardNavbar';
+import Content from '@/components/Invoice/Content';
+import DashboardNavbar from '@/components/Invoice/DashboardNavbar';
 import React from 'react';
 
 const InvoicePage = () => {

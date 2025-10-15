@@ -1,15 +1,21 @@
 import type { Metadata } from "next";
-import { Poppins, Faculty_Glyphic } from "next/font/google";
+import { Poppins, Faculty_Glyphic, Rubik_Doodle_Shadow } from "next/font/google";
 import "./globals.css";
 
 const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
-  weight: "500",
+  weight: ["400", "500", "600", "700"],
 });
 
 const facultyGlyphic = Faculty_Glyphic({
   variable: "--font-faculty-glyphic",
+  subsets: ["latin"],
+  weight: "400",
+});
+
+const rubikDoodleShadow = Rubik_Doodle_Shadow({
+  variable: "--font-rubik-doodle-shadow",
   subsets: ["latin"],
   weight: "400",
 });
@@ -26,9 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${poppins.variable} ${facultyGlyphic.variable} antialiased overflow-x-hidden`}
-      >
+      <body className={`${poppins.variable} ${facultyGlyphic.variable} ${rubikDoodleShadow.variable} font-sans antialiased overflow-x-hidden`}>
         {children}
       </body>
     </html>
