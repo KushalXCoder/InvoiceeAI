@@ -6,23 +6,6 @@ import { useInvoiceStore } from "@/store/invoiceStore";
 import { FaRegLightbulb } from "react-icons/fa6";
 import dayjs from "dayjs";
 
-type InvoiceData = {
-  invoiceNumber: string;
-  orderDate: string;
-  dueDate: string | null;
-  companyName: string;
-  logo: File | null;
-  address1: string;
-  address2: string;
-  address3: string;
-  billToName: string;
-  billToAddress1: string;
-  billToAddress2: string;
-  billToAddress3: string;
-  notes: string;
-  tnc: string;
-};
-
 const InvoiceInput = ({ screen }: { screen: string }) => {
   const { data, isEditing, editingData, setField } = useInvoiceStore();
 
@@ -34,7 +17,7 @@ const InvoiceInput = ({ screen }: { screen: string }) => {
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { name, type, value } = e.target;
-    const key = name as keyof InvoiceData;
+    const key = name as keyof InvoiceInfo;
     if (type === "file") {
       const target = e.target as HTMLInputElement;
       setField(key, target.files?.[0] || null);
@@ -45,7 +28,7 @@ const InvoiceInput = ({ screen }: { screen: string }) => {
 
   return (
     <div
-      className={`invoice-details max-lg:w-full w-2/6 bg-white mt-2 rounded-lg px-5 py-3 overflow-y-auto font-poppins ${
+      className={`invoice-details max-lg:w-full w-2/6 bg-white mt-5 rounded-lg px-5 py-3 overflow-y-auto font-poppins ${
         screen === "mobile" ? `` : `max-lg:hidden`
       }`}
     >

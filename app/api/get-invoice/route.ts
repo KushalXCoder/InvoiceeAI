@@ -6,6 +6,8 @@ export const POST = async (req: NextRequest) => {
     try {
         // Get id from request
         const {id} = await req.json();
+        console.log(id);
+        
         if(!id) {
             return NextResponse.json({message: "Id not found"}, {status: 400});
         }

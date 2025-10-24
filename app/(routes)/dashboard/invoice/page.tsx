@@ -1,13 +1,13 @@
-import Content from '@/components/Invoice/Content';
-import DashboardNavbar from '@/components/Invoice/DashboardNavbar';
-import React from 'react';
+import InvoiceInput from '@/components/invoice/InvoiceInput'
+import InvoicePreview from '@/components/invoice/InvoicePreview'
+import React from 'react'
 
 const InvoicePage = () => {
   return (
-    <>
-        <DashboardNavbar/>
-        <Content/>
-    </>
+        <main className='dashboard-content h-full w-full bg-gray-200 flex overflow-y-hidden'>
+          <InvoicePreview />
+          <InvoiceInput screen=""/>
+        </main>
   )
 }
 

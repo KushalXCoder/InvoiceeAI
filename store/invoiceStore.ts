@@ -2,44 +2,26 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import dayjs from 'dayjs';
 
-type InvoiceData = {
-    invoiceId: string,
-    invoiceNumber: string,
-    orderDate: string,
-    dueDate: string | null,
-    companyName: string,
-    logo: File | null,
-    address1: string,
-    address2: string,
-    address3: string,
-    billToName: string,
-    billToAddress1: string,
-    billToAddress2: string,
-    billToAddress3: string,
-    notes: string,
-    tnc: string,
-};
-
 type InvoiceStore = {
-    data: InvoiceData,
+    data: InvoiceInfo,
     currentInvoiceId: string,
     setInvoiceId: (id: string) => void,
-    setField: (field: keyof InvoiceData, value: string | File | null) => void,
+    setField: (field: keyof InvoiceInfo, value: string | File | null) => void,
     isInvoiceChanged: boolean,
     isEditing: boolean,
     setEdit: (value: boolean) => void,
-    editingData: InvoiceData,
-    setEditingData: (data: InvoiceData) => void,
+    editingData: InvoiceInfo,
+    setEditingData: (data: InvoiceInfo) => void,
     reset: () => void,
 };
 
-const initialInvoiceData: InvoiceData = {
+const initialInvoiceInfo: InvoiceInfo = {
     invoiceId: '',
     invoiceNumber: '',
     orderDate: dayjs().format("DD-MM-YYYY"),
     dueDate: null,
     companyName: '',
-    logo: null,
+    // logo: null,
     address1: '',
     address2: '',
     address3: '',
@@ -54,7 +36,7 @@ const initialInvoiceData: InvoiceData = {
 export const useInvoiceStore = create<InvoiceStore>()(
     persist(
         (set) => ({
-            data: initialInvoiceData,
+            data: initialInvoiceInfo,
             currentInvoiceId: '',
             setInvoiceId: (id: string) => 
                 set(() => ({
@@ -81,14 +63,14 @@ export const useInvoiceStore = create<InvoiceStore>()(
                 set(() => ({
                     isEditing: value,
                 })),
-            editingData: initialInvoiceData,
+            editingData: initialInvoiceInfo,
             setEditingData: (data) =>
                 set(() => ({
                     editingData: data,
                 })),
             reset: () =>
                 set(() => ({
-                    data: initialInvoiceData,
+                    data: initialInvoiceInfo,
                     isInvoiceChanged: false,
                     currentInvoiceId: '',
                 })),

@@ -24,7 +24,9 @@ export default function InvoiceLanding() {
         {/* Invoice Header - Grid Layout */}
         <div className="grid grid-cols-[auto_1fr_auto] border-b border-gray-400">
           {/* Logo Section */}
-          <AppLogo />
+          <div className="px-6 py-4 border-r border-gray-400 flex items-center gap-3">
+            <AppLogo />
+          </div>
 
           {/* Invoice Number */}
           <div className="p-6 border-r border-gray-400 flex justify-center items-center">

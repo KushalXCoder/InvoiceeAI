@@ -2,17 +2,6 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { useInvoiceStore } from "./invoiceStore";
 
-type ItemsData = {
-    itemsDescription: string,
-    qty: number | null,
-    rate: number | null,
-    igst: number | null,
-    cgst: number | null,
-    sgst: number | null,
-    cess: number | null,
-    amount: number | null,
-}
-
 type ItemsStore = {
     itemsData: ItemsData[],
     editingItemsData: ItemsData[],
@@ -25,7 +14,7 @@ type ItemsStore = {
     discount: number | null,
     isItemsChanged: boolean,
     resetItems: () => void;
-}
+};
 
 const initialItemsData: ItemsData = {
     itemsDescription: "",

@@ -3,8 +3,9 @@
 import React from 'react';
 import { FaRegFilePdf } from "react-icons/fa6";
 import { useInvoiceStore } from '@/store/invoiceStore';
-import { generatePdf } from '@/lib/helper/generatePdf';
+import { generateInvoiceBlob } from '@/lib/helper/generatePdf';
 import { useItemsStore } from '@/store/itemsStore';
+import { Button } from '../ui/button';
 
 const InvoiceDownload = () => {
   const { data, isEditing, setField, setInvoiceId, isInvoiceChanged } = useInvoiceStore();
@@ -16,7 +17,22 @@ const InvoiceDownload = () => {
     const finalItemsData = isEditing ? useItemsStore.getState().editingItemsData : useItemsStore.getState().itemsData;
 
     // Generating pdf using required things
-    generatePdf(finalData, finalItemsData, "save");
+    // generatePdf(finalData, finalItemsData, "save");
+
+    // New
+    const pdfBlob = await generateInvoiceBlob(finalData, finalItemsData);
+    
+    // Download the PDF
+    const url = URL.createObjectURL(pdfBlob);
+    const link = document.createElement('a');
+    
+    link.href = url;
+    link.download = 'invoice.pdf';
+    document.body.appendChild(link);
+    
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
 
     // Finding total amount, as to store it in database
     const totalAmount = findTotal("amount");
@@ -46,10 +62,10 @@ const InvoiceDownload = () => {
   };
 
   return (
-    <button onClick={handleDownload} className='flex justify-center items-center max-lg:h-fit max-lg:w-1/2 gap-3 bg-blue-600 px-4 max-lg:py-2 py-3 max-lg:text-[12px] text-white rounded-lg cursor-pointer'>
+    <Button onClick={handleDownload} className='flex justify-center items-center max-lg:h-fit max-lg:w-1/2 gap-3 px-4 max-lg:py-2 py-3 max-lg:text-[12px] text-white rounded-lg cursor-pointer'>
         <FaRegFilePdf size={22} className='max-lg:hidden'/>
         Save
-    </button>
+    </Button>
   )
 }
 

@@ -1,5 +1,5 @@
 import connectDb from "@/lib/helper/connectDb";
-import { generatePdf } from "@/lib/helper/generatePdf";
+import { generateInvoiceBlob } from "@/lib/helper/generatePdf";
 import Invoice from "@/lib/models/invoice.model";
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
@@ -7,7 +7,7 @@ import nodemailer from "nodemailer";
 export const POST = async (req: NextRequest) => {
     // Getting data from the request
     const { email, id } = await req.json();
-    console.log(email);
+
     try {
         // Connect to databse
         await connectDb();
@@ -19,7 +19,9 @@ export const POST = async (req: NextRequest) => {
         }
 
         // Get the pdf buffer to be sent to mail
-        const pdfContent = generatePdf(invoice.invoiceInfo, invoice.itemsData, "buffer");
+        const blob = await generateInvoiceBlob(invoice.invoiceInfo, invoice.itemsData);
+        const arrayBuffer = await blob.arrayBuffer();
+        const pdfContent = Buffer.from(arrayBuffer);
 
         // Creating a transpoter
         const transpoter = nodemailer.createTransport({

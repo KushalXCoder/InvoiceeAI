@@ -6,13 +6,13 @@
   import { useItemsStore } from "@/store/itemsStore";
   import dayjs from "dayjs";
 
-  declare module "jspdf" {
-    interface jsPDF {
-      lastAutoTable: {
-        finalY: number;
-      };
-    }
-  }
+  // declare module "jspdf" {
+  //   interface jsPDF {
+  //     lastAutoTable: {
+  //       finalY: number;
+  //     };
+  //   }
+  // }
 
   const InvoicePreview = () => {
     const { data, editingData, isEditing } = useInvoiceStore();
@@ -22,18 +22,18 @@
     const details = { ...source };
 
     return (
-      <div className="invoice-preview max-lg:w-full w-4/6 px-10 pt-8 max-lg:px-2 max-lg:pt-2 overflow-y-auto h-full">
+      <div className="invoice-preview max-lg:w-full w-4/6 px-10 pt-5 max-lg:px-2 max-lg:pt-2 overflow-y-auto h-full">
         <div className="document w-full h-fit bg-[#ffffff] rounded-lg px-8 py-10 max-lg:px-2 max-lg:py-2 mb-5 border">
           <div className="top-section flex justify-between gap-2 w-full">
             <div className="company-details flex flex-col gap-2 w-2/4 max-lg:w-2/5 flex-wrap">
-              {data.logo && (
+              {/* {data.logo && (
                 <img
                   src={URL.createObjectURL(data.logo)}
                   alt="Company Logo"
                   width={200}
                   height={200}
                 />
-              )}
+              )} */}
               <p className="company-name font-poppins text-[19px] max-lg:text-[16px]">
                 {details.companyName}
               </p>

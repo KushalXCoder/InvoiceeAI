@@ -31,8 +31,6 @@ const LoginForm = () => {
         ? "Logged in successfully!"
         : `Login failed: ${res.error}`
     );
-
-    console.log(res);
   };
 
   return (
