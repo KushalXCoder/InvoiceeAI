@@ -4,10 +4,10 @@ import React from 'react'
 
 const InvoicePage = () => {
   return (
-        <main className='dashboard-content h-full w-full bg-gray-200 flex overflow-y-hidden'>
-          <InvoicePreview />
-          <InvoiceInput screen=""/>
-        </main>
+      <main className='dashboard-content h-full w-full bg-gray-200 flex overflow-y-hidden'>
+        <InvoicePreview />
+        <InvoiceInput screen=""/>
+      </main>
   )
 }
 
