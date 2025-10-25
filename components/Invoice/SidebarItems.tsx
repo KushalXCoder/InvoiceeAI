@@ -47,6 +47,10 @@ const manageItems = [
 
 const allItems = { applicationItems, createItems, manageItems };
 
+const handleSettings = () => {
+  console.log("Settings clicked");
+}
+
 export const SidebarItems = () => {
   const pathname = usePathname();
   return (
@@ -61,10 +65,17 @@ export const SidebarItems = () => {
               {allItems[item.name as keyof typeof allItems].map((subItem) => (
                 <SidebarMenuItem key={subItem.title} className={`${pathname.toLowerCase() === subItem.url.toLowerCase() ? 'bg-gray-300 text-blue-700' : ''} hover:bg-gray-300 rounded-lg py-1 hover:text-blue-700 transition-colors`}>
                   <SidebarMenuButton asChild>
-                    <Link href={subItem.url}>
-                      <subItem.icon style={{ width: '20px', height: '20px' }} className='me-1' />
-                      <span className='text-[17px] mt-0.5'>{subItem.title}</span>
-                    </Link>
+                    {subItem.title === "Settings" ? (
+                      <div onClick={handleSettings} className="flex items-center cursor-pointer">
+                        <subItem.icon style={{ width: '20px', height: '20px' }} className='me-1' />
+                        <h1 className="text-[17px] mt-1">Settings</h1>  
+                      </div>
+                    ) : (
+                      <Link href={subItem.url}>
+                        <subItem.icon style={{ width: '20px', height: '20px' }} className='me-1' />
+                        <span className='text-[17px] mt-0.5'>{subItem.title}</span>
+                      </Link>
+                    )}
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
