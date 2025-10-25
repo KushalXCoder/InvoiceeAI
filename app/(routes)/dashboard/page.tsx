@@ -3,8 +3,8 @@ import { auth } from "@/auth";
 import { cookies } from "next/headers";
 import verifyToken from "@/lib/helper/verifyToken";
 import { JwtPayload } from "jsonwebtoken";
-import { InvoiceTable } from "@/components/dashboard/table";
-import { columns, InvoiceTableData } from "@/components/dashboard/columns";
+import { InvoiceTable } from "@/components/Dashboard/table";
+import { columns, InvoiceTableData } from "@/components/Dashboard/columns";
 import dayjs from "dayjs";
 
 const fetchData = async (email: string): Promise<InvoiceData[]> => {
