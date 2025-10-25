@@ -1,14 +1,5 @@
 import React from "react";
-// import { FaUserCircle } from "react-icons/fa";
 import { auth } from "@/auth";
-// import Image from 'next/image';
-// import { SiGoogledocs } from "react-icons/si";
-// import { SiTicktick } from "react-icons/si";
-// import { GiCancel } from "react-icons/gi";
-// import { FaExclamationCircle } from "react-icons/fa";
-// import { calculateValue } from '@/lib/helper/calculateValue';
-// import dayjs from 'dayjs';
-// import DashboardActions from '@/components/dashboard/DashboardActions';
 import { cookies } from "next/headers";
 import verifyToken from "@/lib/helper/verifyToken";
 import { JwtPayload } from "jsonwebtoken";
