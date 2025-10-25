@@ -3,6 +3,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { getToken } from "@/lib/helper/getToken";
 import verifyToken from "@/lib/helper/verifyToken";
 import { UserSidebar } from "@/components/Invoice/InvoiceSidebar";
+import { redirect } from "next/navigation";
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -13,7 +14,7 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
   const token = await getToken();
 
   if(!token.found) {
-    window.location.href = '/login';
+    return redirect('/');
   }
 
   const sessionData = await verifyToken(token.token ?? "");
