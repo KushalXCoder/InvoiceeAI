@@ -1,5 +1,5 @@
-import InvoiceInput from '@/components/invoice/InvoiceInput'
-import InvoicePreview from '@/components/invoice/InvoicePreview'
+import InvoiceInput from '@/components/Invoice/InvoiceInput'
+import InvoicePreview from '@/components/Invoice/InvoicePreview'
 import React from 'react'
 
 const InvoicePage = () => {

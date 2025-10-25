@@ -1,7 +1,7 @@
 "use client";
 
-import ChatArea from '@/components/ai-invoice/ChatArea';
-import UserForm from '@/components/ai-invoice/UserForm';
+import ChatArea from '@/components/AI-Invoice/ChatArea';
+import UserForm from '@/components/AI-Invoice/UserForm';
 import { useAiStore } from '@/store/aiStore';
 import React, { useEffect } from 'react';
 import { toast } from 'sonner';
