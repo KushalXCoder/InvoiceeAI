@@ -68,3 +68,29 @@ export const UserRegister = async (data: RegisterFormData) => {
     };
   }
 };
+
+export const UserLogout = async () => {
+  try {
+    const response = await fetch('/api/auth/logout', {
+      credentials: 'include',
+    });
+
+    const resData = await response.json();
+    console.log("Logout API Response:", resData);
+
+    if(response.ok) {
+      return { status: 'success', message: resData.message || "Logout successful" };
+    }
+
+    return {
+      status: 'error',
+      error: resData.message || 'Logout failed',
+    };
+  } catch (error) {
+    console.error("Logout failed:", error);
+    return {
+      status: "error",
+      error: error,
+    };
+  }
+}

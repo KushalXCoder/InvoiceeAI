@@ -49,11 +49,10 @@ declare global {
       status: string,
     }
 
-    type PayloadData = {
-        valid: boolean,
-        expired: boolean,
-        payload: JwtPayload,
-    }
+    interface MyPayloadData extends JwtPayload {
+      email: string;
+      name: string;
+    };
 
     type UserInvoiceInfo = {
       finalAmount: number,
@@ -72,5 +71,12 @@ declare global {
         sgst: number | null,
         cess: number | null,
         line_total: number | null,
+    }
+
+    interface VerifyTokenResult {
+        valid: boolean;
+        expired: boolean;
+        payload?: MyPayloadData;
+        error?: Error;
     }
 }

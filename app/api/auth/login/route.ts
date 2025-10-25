@@ -22,7 +22,7 @@ export const POST = async(req: NextRequest) => {
             return NextResponse.json({ message: "Incorrect Password" }, { status: 400 });
         }
 
-        const token = jwt.sign({ email }, `${process.env.JWT_SECRET}`, { expiresIn: '1h' });
+        const token = jwt.sign({ email, name: checkUser.name }, `${process.env.JWT_SECRET}`, { expiresIn: '1h' });
 
         const cookieStore = await cookies();
         cookieStore.set({

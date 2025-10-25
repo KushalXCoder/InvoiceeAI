@@ -21,7 +21,7 @@ export const POST = async(req: NextRequest) => {
             password : hashedPassword,
         });
 
-        const token = jwt.sign({email}, `${process.env.JWT_SECRET}`, { expiresIn: '1h' });
+        const token = jwt.sign({ email, name: "Guest" }, `${process.env.JWT_SECRET}`, { expiresIn: '1h' });
 
         const cookieStore = await cookies();
         cookieStore.set({

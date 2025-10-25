@@ -10,6 +10,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         trime: true,
     },
+    name: {
+        type: String,
+        default: "Guest",
+    },
 }, { timestamps: true });
 
 const User = mongoose.models?.User || mongoose.model("User", UserSchema);

@@ -1,17 +1,27 @@
-"use client";
-
 import { ReactNode } from "react";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import UserSidebar from "@/components/Invoice/InvoiceSidebar";
+import { getToken } from "@/lib/helper/getToken";
+import verifyToken from "@/lib/helper/verifyToken";
+import { UserSidebar } from "@/components/Invoice/InvoiceSidebar";
 
 interface DashboardLayoutProps {
   children: ReactNode;
 }
 
-export default function DashboardLayout({ children }: DashboardLayoutProps) {
+export default async function DashboardLayout({ children }: DashboardLayoutProps) {
+  // Get token
+  const token = await getToken();
+
+  if(!token.found) {
+    window.location.href = '/login';
+  }
+
+  const sessionData = await verifyToken(token.token ?? "");
+  console.log("Session Data in Layout:", sessionData);
+
   return (
     <SidebarProvider className="h-screen">
-        <UserSidebar />
+        <UserSidebar sessionData={sessionData} />
         <div className="h-screen w-screen">
             {children}
         </div>
